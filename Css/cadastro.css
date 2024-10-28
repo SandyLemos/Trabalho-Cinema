@@ -1,0 +1,265 @@
+
+
+body{
+    background: linear-gradient(to top, #ffc802 87%, #FFC800 88%);
+    margin: 0px;
+    font-family: "Montserrat";
+    
+    
+}
+
+div{
+    width: 100%;
+}
+
+
+.centralizar,#logo{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+
+
+#logo{
+    height: 345px;
+    width: 350px;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    top: 50px; 
+    z-index: 1;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#icone{
+    position: relative;
+    width: 70%;
+    height: 50%;
+    top: 25%;
+}
+
+#icone2{
+    position: absolute;
+    width: 115%;
+    height: 200px;
+    bottom: -80px;
+}
+
+
+.enfeite{
+    height: 200px;
+    width: 50%;
+    position: absolute;
+    z-index: 0;
+    top: 120px;
+}
+
+#esquerda{
+  
+    left: 0px;
+    
+}
+
+#direita{
+    right: 0px;
+}
+
+.mini{
+  position: absolute;
+  z-index: 1;
+}
+
+.fig1{
+  width: 80px;
+  height: 80px;
+  top: -40px; 
+  transform: translate(350%);
+}
+
+.fig2{
+  width: 160px;
+  height: 160px;
+  top:320px;
+  transform: translate(-160%);
+  
+}
+
+
+
+#area_cadastro{
+    width: 30%;
+    height: 410px;
+    background-color: white;
+    position: relative;
+    border-radius: 10px;
+    border:solid;
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+#cabecalho{
+    display: inline;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: solid;
+}
+
+#parte_info{
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    position: relative;
+    flex-grow: 1;
+    align-items: flex-start;
+}
+
+/*Caixas de Texto e Senha*/
+input{
+    position: absolute;
+    border-radius: 10px;
+    height: 23px;
+    width: 75%;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /*Adcionando sombramento as caixas de texto*/
+    padding-left: 10px;
+}
+
+input[type=text]{
+    font-family: "Montserrat";
+}
+
+#parte_botao{
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+    
+    
+}
+
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+.button {
+  position: relative;
+  padding: 10px 22px;
+  margin: 10px;
+  width: auto;
+  right: 10%;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  background-color: #7d2ae8;
+  transition: all 0.2s ease;
+  font-family:" Poppins", sans-serif ;
+  
+}
+.button:active {
+  transform: scale(0.96);
+}
+.button:before,
+.button:after {
+  position: absolute;
+  content: "";
+  width: 150%;
+  left: 50%;
+  height: 100%;
+  transform: translateX(-50%);
+  z-index: -1000;
+  background-repeat: no-repeat;
+}
+.button.animate::before {
+  top: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 20%, #7d2ae8 20%, transparent 30%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+    10% 10%, 18% 18%;
+  animation: greentopBubbles ease-in-out 0.6s forwards infinite;
+}
+@keyframes greentopBubbles {
+  0% {
+    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+      40% 90%, 55% 90%, 70% 90%;
+  }
+  50% {
+    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+      50% 50%, 65% 20%, 90% 30%;
+  }
+  100% {
+    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+      50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+.button.animate::after {
+  bottom: -70%;
+  background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+    radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+  animation: greenbottomBubbles ease-in-out 0.6s forwards infinite;
+}
+@keyframes greenbottomBubbles {
+  0% {
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+      70% -10%, 70% 0%;
+  }
+  50% {
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+      105% 0%;
+  }
+  100% {
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+      110% 10%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+#imagem_fundo{
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background-image: url(../assets/pipoca.png);
+  background-size: 180px 180px;
+  background-repeat: round;
+  background-position: top;
+}
+
+@media (max-width: 480px) {
+  #logo {
+      width: 200px;
+      height: 200px;
+  }
+
+  #area_cadastro {
+      width: 100%;
+      padding: 10px;
+  }
+
+  .button {
+      width: 100%;
+      padding: 12px;
+  }
+
+  .mini {
+      width: 60px;
+      height: 60px;
+      top: -20px;
+  }
+}
