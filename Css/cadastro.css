@@ -241,25 +241,146 @@ input[type=text]{
   background-position: top;
 }
 
-@media (max-width: 480px) {
+/* Ajustes para telas grandes (entre 1024px e 1823px) */
+@media screen and (max-width: 1823px) {
   #logo {
-      width: 200px;
-      height: 200px;
+      width: 300px; /* Ajuste conforme necessário */
+      height: 300px;
+      margin-top: 30px;
   }
 
   #area_cadastro {
-      width: 100%;
-      padding: 10px;
+      width: 30%;
+  }
+
+  .fig1 {
+    width: 80px;
+    height: 70px;
+    position: absolute; /* Permite posicionamento absoluto */
+    left: 65%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Compensa a largura do ícone para centralizar */
+  }
+
+  .fig2 {
+    width: 150px; /* Largura do ícone */
+    height: 150px; /* Altura do ícone */
+    position: absolute; /* Permite posicionamento absoluto */
+    left: 38%; /* Centraliza horizontalmente */
+    transform: translateX(-50%);
+}
+}
+
+/* Ajustes para telas médias (entre 584px e 1024px) */
+@media screen and (max-width: 1024px) {
+  #logo {
+      width: 300px;
+      height: 300px;
+      margin-top: 20px;
+  }
+
+  #area_cadastro {
+      width: 40%;
+      padding: 15px;
   }
 
   .button {
-      width: 100%;
+      width: 30%;
       padding: 12px;
   }
+  .fig1 {
+    width: 80px;
+    height: 70px;
+    position: absolute; /* Permite posicionamento absoluto */
+    left: 71%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Compensa a largura do ícone para centralizar */
+  }
 
-  .mini {
-      width: 60px;
-      height: 60px;
-      top: -20px;
+  .fig2 {
+    width: 150px; /* Largura do ícone */
+    height: 150px; /* Altura do ícone */
+    position: absolute; /* Permite posicionamento absoluto */
+    left: 32%; /* Centraliza horizontalmente */
+    transform: translate(-50%, 30px);
+}
+}
+
+/* (tablets) */
+@media screen and (max-width: 768px) {
+  #logo {
+      width: 25vw;
+      height: 30vh;
+  }
+  #area_cadastro {
+      width: 40%;
+      padding: 2.4vh;
+  }
+
+  #direita {
+    height: 90px;
+  }
+
+  #esquerda {
+    height: 90px;
+  }
+
+  #cabecalho {
+    font-size: 15px;
+  }
+
+  #parte_info {
+    font-size: 15px;
+    align-self: last baseline;
+  }
+  .button {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;
+    right: auto;
+    width: 20vw; /* 50% da largura da tela */
+    max-width: 100px; /* Define um limite para evitar que o botão fique muito largo */
+    padding: 1vh 1vw; /* Ajusta o padding baseado no tamanho da tela */
+  }
+  .fig1 {
+      width: 10vw;
+      height: 10vh;
+      left: 70%;
+      transform: translateX(-50%);
+  }
+  .fig2 {
+      width: 20vw;
+      height: 20vh;
+      left: 33%;
+      transform: translate(-50%, 45px);
+  }
+}
+
+/* Telas pequenas (smartphones) */
+@media screen and (max-width: 576px) {
+  #logo {
+      width: 30vw;
+      height: 30vh;
+      margin-top: 5vh;
+  }
+  #area_cadastro {
+      width: 50%;
+      padding: 2vh;
+  }
+  .button {
+      width: 80%;
+      padding: 1.5vh;
+  }
+  
+  .fig1 {
+    width: 10vw;
+    height: 10vh;
+    left: 75%;
+    transform: translateX(-50%);
+  }
+
+  .fig2 {
+    width: 20vw;
+    height: 20vh;
+    left: 28%;
+    transform: translate(-50%, 40px);
   }
 }
