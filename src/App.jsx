@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Entrar from './views/Entrar.jsx';
-import Registrar from './views/Registrar.jsx'; // Supondo que você tenha um componente Registrar
+import Entrar from './pages/Entrar.jsx';
+import Registrar from './pages/Registrar.jsx';
 
 const App = () => {
     return (
