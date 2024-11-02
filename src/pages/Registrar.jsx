@@ -150,11 +150,8 @@ const Registrar = () => {
                             required
                         />
                     </div>
-                    <span className="block mb-2">A senha deve conter entre 8 a 16 caracteres e cumprir com os requisitos abaixo:</span>
-                    <ul className="list-disc pl-5 mb-4">
-                        <li>Pelo menos um caractere</li>
-                        <li>Pelo menos um número</li>
-                    </ul>
+                    <span className="block mb-2">A senha deve conter entre 8 a 16 caracteres:</span>
+
                     <div className="flex items-center mb-4">
                         <input
                             type="checkbox"
