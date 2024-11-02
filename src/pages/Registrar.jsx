@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import { useEffect, useState } from 'react';
 import cinemaLogo from '../assets/cinema_logo.png';
 import tape from '../assets/tape.png';
 import iconeCadastro from '../assets/cadastro.png';
