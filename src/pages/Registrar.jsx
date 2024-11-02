@@ -2,6 +2,12 @@ import { useEffect, useState } from 'react';
 import cinemaLogo from '../assets/cinema_logo.png';
 import tapeImage from "../assets/tape.png";
 import iconeCadastro from '../assets/cadastro.png';
+import AuthController from "../controllers/AuthController.js";
+import EstadosController from "../controllers/EstadosController.js";
+import CidadesController from "../controllers/CidadesController.js";
+import {formatarCpf} from "../utils/formatarCpf.js";
+import {formatarTelefone} from "../utils/formatarTelefone.js";
+import '../styles/entrar.css'
 
 const Registrar = () => {
     useEffect(() => {
@@ -19,38 +25,110 @@ const Registrar = () => {
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [concordaTermos, setConcordaTermos] = useState(false);
     const [mensagemErro, setMensagemErro] = useState('');
+    const [isLoading, setIsLoading] = useState(false); // Estado de loading
+    const [estados, setEstados] = useState([]);
+    const [cidades, setCidades] = useState([]);
 
-    const handleRegister = (e) => {
+    const [loadingEstados, setLoadingEstados] = useState(true);
+    const [loadingCidades, setLoadingCidades] = useState(false);
+
+
+    const handleCpfChange = (event) => {
+        const value = event.target.value;
+        const formattedValue = formatarCpf(value);
+        setCpf(formattedValue);
+    };
+
+    const handleTelefoneChange = (event) => {
+        const value = event.target.value;
+        const formattedValue = formatarTelefone(value);
+        setTelefone(formattedValue);
+    };
+
+
+// Função utilitária para tratar erros
+    const handleAsyncOperation = async (operation, onSuccess, onError) => {
+        try {
+            const response = await operation();
+            if (response.success) {
+                onSuccess(response);
+            } else {
+                onError(response.msg || 'Operação falhou.');
+            }
+        } catch (error) {
+            onError(error.message);
+        }
+    };
+
+// useEffect para carregar estados
+    useEffect(() => {
+        const fetchStates = async () => {
+            setLoadingEstados(true);
+            await handleAsyncOperation(
+                () => EstadosController.getAllStates(),
+                (response) => setEstados(response.states),
+                (errorMsg) => setMensagemErro('Falha ao carregar estados: ' + errorMsg)
+            );
+            setLoadingEstados(false);
+        };
+
+        fetchStates();
+    }, []);
+
+// Função para carregar cidades ao selecionar um estado
+    const handleEstadoChange = async (e) => {
+        const selectedEstado = e.target.value;
+        setEstado(selectedEstado);
+        setCidade(''); // Reseta a cidade ao mudar de estado
+        setCidades([]); // Limpa as cidades anteriores
+
+        if (selectedEstado) {
+            setLoadingCidades(true);
+            try {
+                const response = await CidadesController.getCidadesByEstado(selectedEstado);
+                setCidades(response.cities); // Use o array correto
+            } catch (error) {
+                setMensagemErro('Erro ao buscar cidades: ' + error.message);
+            } finally {
+                setLoadingCidades(false);
+            }
+        }
+    };
+
+    const handleRegister = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+
         if (senha !== confirmarSenha) {
             setMensagemErro('As senhas não coincidem.');
+            setIsLoading(false);
             return;
         }
         if (!concordaTermos) {
             setMensagemErro('Você deve concordar com os termos.');
+            setIsLoading(false);
             return;
         }
-    };
 
-    // Função para formatar CPF
-    const formatarCpf = (value) => {
-        return value
-            .replace(/\D/g, '')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d)/, '$1.$2')
-            .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
-            .substring(0, 14);
+        try {
+            const response = await AuthController.register(
+                nome,
+                email,
+                senha,
+                confirmarSenha,
+                cpf.replace(/\D/g, ''), // Remove a formatação do CPF
+                dataNascimento,
+                estado,
+                cidade,
+            );
+            console.log('Cadastro bem-sucedido:', response);
+            // Lógica para redirecionar ou armazenar dados
+        } catch (error) {
+            setMensagemErro(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
-
-    // Função para formatar Telefone
-    const formatarTelefone = (value) => {
-        return value
-            .replace(/\D/g, '')
-            .replace(/(\d{2})(\d)/, '($1) $2')
-            .replace(/(\d{5})(\d)/, '$1-$2')
-            .substring(0, 15);
-    };
-
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-color-grad relative">
@@ -69,6 +147,7 @@ const Registrar = () => {
                     <h2 className="text-lg font-semibold mb-2">Sobre Você</h2>
                     <input
                         type="text"
+                        maxLength='14'
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
                         placeholder="Nome Completo"
@@ -79,7 +158,7 @@ const Registrar = () => {
                         <input
                             type="text"
                             value={cpf}
-                            onChange={(e) => setCpf(formatarCpf(e.target.value))}
+                            onChange={handleCpfChange}
                             placeholder="CPF"
                             className="border border-gray-300 rounded-lg p-2 w-1/2 mr-2"
                             required
@@ -105,7 +184,7 @@ const Registrar = () => {
                         <input
                             type={'tel'}
                             value={telefone}
-                            onChange={(e) => setTelefone(formatarTelefone(e.target.value))}
+                            onChange={handleTelefoneChange}
                             placeholder="Telefone"
                             className="border border-gray-300 rounded-lg p-2 w-1/2 ml-2"
                             required
@@ -115,20 +194,45 @@ const Registrar = () => {
                     <div className="flex justify-between mb-4">
                         <select
                             value={estado}
-                            onChange={(e) => setEstado(e.target.value)}
+                            onChange={handleEstadoChange}
                             className="border border-gray-300 rounded-lg p-2 w-1/2 mr-2"
                             required
                         >
-                            <option value="">Selecione o Estado</option>
+                            {estado === "" && <option value="">Selecione o Estado</option>}
+
+                            {loadingEstados ? (
+                                <option>Carregando estados...</option>
+                            ) : (
+                                estados.map((state) => (
+                                    <option key={state.id} value={state.id}>
+                                        {state.nome}
+                                    </option>
+                                ))
+                            )}
                         </select>
+
                         <select
                             value={cidade}
                             onChange={(e) => setCidade(e.target.value)}
                             className="border border-gray-300 rounded-lg p-2 w-1/2 ml-2"
                             required
-                            disabled={!estado}  // Desabilita o campo cidade se nenhum estado estiver selecionado
+                            disabled={!estado}
                         >
-                            <option value="">Selecione a Cidade</option>
+                            {cidade === "" && <option value="">Selecione a Cidade</option>}
+
+                            {loadingCidades ? (
+                                <option>Carregando cidades...</option>
+                            ) : (
+                                cidades.length > 0 ? (
+                                    cidades.map((city) => (
+                                        <option key={city.id} value={city.id}>
+                                            {city.nome}
+                                        </option>
+                                    ))
+                                ) : (
+                                    !loadingCidades && <option value="">Nenhuma cidade disponível</option>
+                                )
+                            )}
                         </select>
                     </div>
                     <h2 className="text-lg font-semibold mb-2">Crie sua Senha</h2>
