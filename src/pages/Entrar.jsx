@@ -51,15 +51,15 @@ const Entrar = () => {
             </div>
             <img src={tapeImage} className="absolute left-0 top-[19%] w-1/4" alt="Enfeite Esquerdo"/>
             <img src={tapeImage} className="absolute right-0 top-[19%] w-1/4" alt="Enfeite Direito"/>
-            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md relative z-10">
+            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-screen-sm relative z-10">
                 <img src={iconePipoca} alt="Ícone" className="h-[20%] mx-auto mb-4 absolute -top-8 right-[-6%]"/>
                 <img src={iconePipocaViva} alt="Mascote" className="h-[35%] mx-auto mt-4 absolute -bottom-[15%] left-[-8%]"/>
-                <form id="area_cadastro" onSubmit={handleLogin}>
-                    <div id="cabecalho" className="flex items-center mb-6">
+
+                <form onSubmit={handleLogin}>
+                    <div className="flex items-center mb-6">
                         <img src={cadastroImage} alt="Registrar" className="w-10 mr-2"/>
                         <h1 className="text-2xl font-bold">Login</h1>
                     </div>
-                    <div id="parte_info">
                         <ul>
                             <li className="mb-4">
                                 <h2 className="text-lg font-semibold">Email</h2>
@@ -84,7 +84,6 @@ const Entrar = () => {
                                 />
                             </li>
                         </ul>
-                    </div>
                     {mensagemErro && (
                         <div className="flex items-center text-red-500 mt-2 transition-opacity duration-300">
                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
