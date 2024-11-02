@@ -172,9 +172,14 @@ const Registrar = () => {
                         <button
                             type="submit"
                             className="bg-purple-500 text-white rounded-lg px-4 py-2 transition hover:bg-purple-600"
+                            disabled={isLoading}
                         >
-                            Registrar-se
+                            {isLoading && (
+                                <div className="loader mr-2"></div>
+                            )}
+                            {isLoading ? '' : 'Cadastrar'}
                         </button>
+
                     </div>
                 </form>
             </div>
