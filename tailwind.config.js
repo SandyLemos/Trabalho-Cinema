@@ -1,5 +1,3 @@
-import pipocaImg from "./src/assets/pipoca.png";
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
