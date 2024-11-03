@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import cinemaLogo from '../assets/cinema_logo.png';
-import tapeImage from '../assets/tape.png';
 import iconePipoca from '../assets/icone_pipoca.png';
 import cadastroImage from '../assets/cadastro.png';
 import iconePipocaViva from '../assets/icone_pipoca_viva.png';
 import pipocaImg from '../assets/pipoca.png';
 import AuthController from "../controllers/AuthController.js";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import '../styles/entrar.css';
 
 const Entrar = () => {
@@ -16,9 +16,15 @@ const Entrar = () => {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [mostrarSenha, setMostrarSenha] = useState(false);
     const [mensagemErro, setMensagemErro] = useState('');
     const [isLoading, setIsLoading] = useState(false); // Estado de loading
     const navigate = useNavigate(); // Criando a instância de navigate
+
+
+    const isVisiblePassword = () => {
+        setMostrarSenha(!mostrarSenha);
+    };
 
     // Função para lidar com o envio do formulário
     const handleLogin = async (e) => {
@@ -44,44 +50,48 @@ const Entrar = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-color-grad relative">
-
-            <div id="logo"
-                 className="bg-white rounded-full w-72 h-72 mb-16 items-center justify-center flex shadow-lg z-10">
-                <img src={cinemaLogo} alt="Logo" className="w-52"/>
+            <div className="bg-white rounded-full w-96 h-96 mb-16 mt-6 items-center justify-center flex shadow-lg z-10">
+                <img src={cinemaLogo} alt="Logo" className="w-72"/>
             </div>
-            <img src={tapeImage} className="absolute left-0 top-[19%] w-1/4" alt="Enfeite Esquerdo"/>
-            <img src={tapeImage} className="absolute right-0 top-[19%] w-1/4" alt="Enfeite Direito"/>
             <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-screen-sm relative z-10">
                 <img src={iconePipoca} alt="Ícone" className="h-[20%] mx-auto mb-4 absolute -top-8 right-[-6%]"/>
                 <img src={iconePipocaViva} alt="Mascote" className="h-[35%] mx-auto mt-4 absolute -bottom-[15%] left-[-8%]"/>
 
                 <form onSubmit={handleLogin}>
                     <div className="flex items-center mb-6">
-                        <img src={cadastroImage} alt="Registrar" className="w-10 mr-2"/>
-                        <h1 className="text-2xl font-bold">Login</h1>
+                        <img src={cadastroImage} alt="Registrar" className="w-10 mr-2 h-10"/>
+                        <h1 className="text-4xl font-bold">Login</h1>
                     </div>
                         <ul>
                             <li className="mb-4">
-                                <h2 className="text-lg font-semibold">Email</h2>
+                                <h2 className="text-2xl pb-2 font-semibold">Email</h2>
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="border border-gray-300 rounded-lg p-2 w-full"
+                                    className="border-[1px] border-black shadow-md h-14 focus:outline-none focus- focus:shadow-lg focus:shadow-gray-300/50 transition-shadow duration-200 rounded-lg p-2 w-full mr-2"
                                     placeholder="Digite seu email"
                                     required
                                 />
                             </li>
                             <li>
-                                <h2 className="text-lg font-semibold">Senha</h2>
-                                <input
-                                    type="password"
-                                    value={senha}
-                                    onChange={(e) => setSenha(e.target.value)}
-                                    className="border border-gray-300 rounded-lg p-2 w-full"
-                                    placeholder="Digite sua senha"
-                                    required
-                                />
+                                <h2 className="text-2xl pb-2 pt-4 font-semibold">Senha</h2>
+                                <div className="relative w-full mr-2">
+                                    <input
+                                        type={mostrarSenha ? "text" : "password"}
+                                        value={senha}
+                                        onChange={(e) => setSenha(e.target.value)}
+                                        className="border-[1px] border-black shadow-md h-14 focus:outline-none focus- focus:shadow-lg focus:shadow-gray-300/50 transition-shadow duration-200 rounded-lg p-2 w-full mr-2"
+                                        placeholder="Digite sua senha"
+                                        required
+                                    />
+                                    <div
+                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                        onClick={isVisiblePassword}
+                                    >
+                                        {mostrarSenha ? <FaEyeSlash /> : <FaEye />}
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     {mensagemErro && (
@@ -94,7 +104,7 @@ const Entrar = () => {
                             <p>{mensagemErro}</p>
                         </div>
                     )}
-                    <div id="parte_botao" className="mt-6 mb-4 flex justify-between">
+                    <div id="parte_botao" className="pt-4 pb-12 flex items-center justify-between">
                         <a
                             className="text-blue-500 hover:cursor-pointer"
                             onClick={handleRegisterClick}
