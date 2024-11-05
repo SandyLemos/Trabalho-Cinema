@@ -1,14 +1,13 @@
 import EstadosRepository from "../repositories/EstadosRepository.js";
 
-class EstadosController {
+class EstadosService {
     async getAllStates() {
         try {
-            const states = await EstadosRepository.getAllStates();
-            return { success: true, states };
+            return await EstadosRepository.getAllStates();
         } catch (error) {
             throw new Error(error.message);
         }
     }
 }
 
-export default new EstadosController;
+export default new EstadosService;

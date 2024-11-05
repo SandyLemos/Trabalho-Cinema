@@ -1,14 +1,13 @@
 import CidadesRepository from "../repositories/CidadesRepository.js";
 
-class CidadesController {
+class CidadesService {
     async getCidadesByEstado(idEstado) {
         try {
-            const cities = await CidadesRepository.getCidadesByEstado(idEstado);
-            return { success: true, cities };
+            return await CidadesRepository.getCidadesByEstado(idEstado) ;
         } catch (error) {
             throw new Error(error.message);
         }
     }
 }
 
-export default new CidadesController();
+export default new CidadesService();
