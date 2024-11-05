@@ -1,5 +1,4 @@
 import api from '../utils/api';
-import EstadoModel from "../models/EstadoModel.js";
 
 class EstadosRepository {
     async getAllStates() {
@@ -7,7 +6,7 @@ class EstadosRepository {
             const response = await api.get('/states');
             // Verificamos se a resposta está no formato esperado
             if (response.data.success && response.data.states) {
-                return response.data.states.map(EstadoModel.fromApi);
+                return response.data.states;
             } else {
                 throw new Error("Formato de resposta inesperado");
             }

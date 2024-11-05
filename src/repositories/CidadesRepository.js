@@ -1,12 +1,11 @@
 import api from '../utils/api';
-import CidadeModel from "../models/CidadeModel.js";
 
 class CidadesRepository {
     async getCidadesByEstado(idEstado) {
         try {
             const response = await api.get(`/states/${idEstado}/cities`);
             if (response.data.success && response.data.cities) {
-                return response.data.cities.map(CidadeModel.fromApi);
+                return response.data.cities;
             } else {
                 throw new Error("Formato de resposta inesperado");
             }
