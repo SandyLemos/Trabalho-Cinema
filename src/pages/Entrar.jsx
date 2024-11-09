@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import cinemaLogo from '../assets/cinema_logo.png';
 import tapeImage from '../assets/tape.png';
 import iconePipoca from '../assets/icone_pipoca.png';
 import cadastroImage from '../assets/cadastro.png';
 import iconePipocaViva from '../assets/icone_pipoca_viva.png';
-import AuthController from "../controllers/AuthController.js";
 import '../styles/entrar.css'
 import {useNavigate} from "react-router-dom";
+import AuthService from "../services/AuthService.js";
 
 const Entrar = () => {
     useEffect(() => {
@@ -24,7 +24,7 @@ const Entrar = () => {
         setMensagemErro(''); // Reseta a mensagem de erro
 
         try {
-            const userData = await AuthController.login(email, senha);
+            const userData = await AuthService.login(email, senha);
             console.log('Login bem-sucedido:', userData);
             // Aqui você pode redirecionar o usuário ou armazenar dados no contexto/global state
         } catch (error) {
