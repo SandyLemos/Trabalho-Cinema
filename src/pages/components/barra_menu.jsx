@@ -73,12 +73,12 @@ function Barra_menu() {
             <div className={styles.p_botao}>
                 <button className={styles.botao}> Menu </button>
                 <button className={styles.botao}> Filmes </button>
-                <button className={styles.botao} style={{width:'8.5rem'}}> Programação </button>
+                <button className={styles.botao}> Programação </button>
             </div>
 
             <div className={styles.p_botao2}>
                 <button className={styles.botao2}> Entrar </button>
-                <button className={styles.botao2} style={{width:'8rem'}}> Cadastrar </button>
+                <button className={styles.botao2}> Cadastrar </button>
             </div>
 
         </div>

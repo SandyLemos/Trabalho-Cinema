@@ -79,7 +79,7 @@ input::placeholder
 .p_botao
 {
     height: 100%;
-    margin-left: 3rem;
+    margin-left: 1rem;
     padding-right: 1rem;
     width: 30rem;
     display: flex;
@@ -91,9 +91,8 @@ input::placeholder
 .p_botao2
 {
     height: 100%;
-    margin-left: 1rem;
     padding-right: 1rem;
-    width: 30rem;
+    width: 26rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -102,9 +101,9 @@ input::placeholder
 }
 
 .botao{
-    left: 375px;
-    width: 8rem;
-    margin: 1rem;
+    width: auto;
+    min-width: 7rem;
+    margin: 0.5rem;
     padding: 10px 22px;
     border-radius: 8px;
     border: none;
@@ -117,9 +116,9 @@ input::placeholder
 }
 
 .botao2{
-    left: 375px;
-    width: 8rem;
-    margin: 1rem;
+    width: auto;
+    min-width: 7rem;
+    margin: 0.5rem;
     padding: 10px 22px;
     border-radius: 8px;
     border: none;
