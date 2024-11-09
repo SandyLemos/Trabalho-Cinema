@@ -1,4 +1,4 @@
-import styles from'./menu.module.css'
+import styles from '../../styles/menu.module.css'
 import logo from '../../assets/cinema_logo.png'
 import {FaSearch, FaSpinner} from "react-icons/fa";
 import {useState} from "react";
@@ -64,7 +64,7 @@ function Barra_menu() {
                             placeholder="Pesquisar Filme"
                         />
                         <button type="submit" className={styles.searchButton}>
-                            {loading ? <FaSpinner className={styles.searchIcon}/> : <FaSearch className={styles.searchIcon}/>}
+                            {loading ? <FaSpinner className={styles.spinner}/> : <FaSearch className={styles.searchIcon}/>}
                         </button>
                     </div>
                 </form>
