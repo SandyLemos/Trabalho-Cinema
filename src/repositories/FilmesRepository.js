@@ -91,7 +91,7 @@ class FilmesRepository {
     // Métodos auxiliares
     handleFilmsResponse(response) {
         if (response.data.success && Array.isArray(response.data.films)) {
-            return response.data.films.films;
+            return response.data;
         } else {
             throw new Error("Formato de resposta inesperado");
         }
