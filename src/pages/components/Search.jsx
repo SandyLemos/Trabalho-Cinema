@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import filmes from "../../services/FilmesService.js";
 
@@ -14,11 +14,11 @@ const Search = () => {
     useEffect(() => {
         const fetchFilms = async () => {
             // Se filmes foram passados através da navegação (state)
-            if (location.state && location.state.films) {
+            if (location.state.films && location.state) {
                 setFilms(location.state.films);
             }
             // Se houve erro na navegação anterior (state.error)
-            else if (location.state && location.state.error) {
+            else if (location.state.error && location.state) {
                 setError(location.state.error);
             }
             // Caso contrário, realiza a busca com base no título na URL
@@ -27,7 +27,7 @@ const Search = () => {
                 setError(''); // Limpa erro anterior
                 try {
                     const response = await filmes.getFilmsByTitle(query);
-                    if (response && response.success && Array.isArray(response.films) && response.films.length > 0) {
+                    if (response.films.length > 0 && Array.isArray(response.films) && response.success && response) {
                         setFilms(response.films); // Atualiza a lista de filmes
                     } else {
                         setError('Nenhum filme encontrado.');
