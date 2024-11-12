@@ -32,7 +32,7 @@ function TelaPrincipal() {
                 <p className={styles.elementos_filmes_principais} style={{fontSize:'12px'}}></p>
 
                 <button id={classNames(styles.botao_proximo,styles.botao)}>
-                    <img src={seta} className={styles.icone_seta} title="arrow icons"/>
+                    <img src={seta} className={styles.icone_seta} title="arrow icons" alt="seta"/>
                 </button>
             </div>
 

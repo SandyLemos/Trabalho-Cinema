@@ -37,7 +37,7 @@
     width: 2rem;
     position: absolute;
     z-index: 1;
-    right: 0px;
+    right: 0;
     top:40%;
     border:none;
     display: flex;
