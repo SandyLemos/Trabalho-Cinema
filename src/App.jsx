@@ -1,15 +1,16 @@
 import {BrowserRouter as Router, Routes, Route, Outlet} from 'react-router-dom';
 import Registrar from './pages/Registrar.jsx';
-import Barra_menu from "./pages/components/barra_menu.jsx";
+import BarraMenu from "./pages/components/BarraMenu.jsx";
 import Search from "./pages/components/Search.jsx";
 import Entrar from "./pages/Entrar.jsx";
+import TelaPrincipal from "./pages/TelaPrincipal.jsx";
 
 const App = () => {
     return (
         <Router>
             <Routes>
                 <Route element={<LayoutWithMenu />}>
-                    <Route path="/" element={<Barra_menu />} />
+                    <Route path="/" element={<TelaPrincipal />} />
                     <Route path="/search" element={<Search />} />
                 </Route>
                 <Route path="/entrar" element={<Entrar />} />
@@ -22,7 +23,7 @@ const App = () => {
 const LayoutWithMenu = () => {
     return (
         <div>
-            <Barra_menu />
+            <BarraMenu />
             <main>
                 <Outlet />
             </main>
