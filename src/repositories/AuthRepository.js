@@ -6,11 +6,12 @@ class AuthRepository {
             const response = await api.post('/login', {
                 email,
                 senha,
-            }, { withCredentials: true });
+            }, );
+            localStorage.setItem('token', response.data.token);
             return response.data; // Retorna os dados do usuário ou token
         } catch (error) {
             // Verifica se o erro tem a estrutura esperada
-            if (error.response && error.response.data) {
+            if (error.response.data && error.response) {
                 const errorData = error.response.data;
 
                 // Lida com diferentes estruturas de erro
@@ -41,12 +42,12 @@ class AuthRepository {
                 id_estado,
                 id_cidade,
                 codigo_ref,
-            }, { withCredentials: true });
-
+            }, );
+            localStorage.setItem('token', response.data.token);
             return response.data; // Retorna os dados do usuário ou token
         } catch (error) {
             // Verifica se o erro tem a estrutura esperada
-            if (error.response && error.response.data) {
+            if (error.response.data && error.response) {
                 const errorData = error.response.data;
 
                 // Lida com diferentes estruturas de erro

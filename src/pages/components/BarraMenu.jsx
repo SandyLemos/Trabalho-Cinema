@@ -1,7 +1,7 @@
 import styles from '../../styles/menu.module.css'
 import logo from '../../assets/cinema_logo.png'
-import {FaSearch, FaSpinner} from "react-icons/fa";
-import {useState} from "react";
+import { FaSearch, FaSpinner } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import FilmesService from "../../services/FilmesService.js";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,12 +9,18 @@ function BarraMenu() {
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Novo estado para verificar se o usuário está logado
     const navigate = useNavigate();
+
+    // Verificar o token no localStorage
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token); // Se o token estiver presente, o usuário está logado
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Verifica se há algo digitado no campo de pesquisa
         if (!query.trim()) {
             return;
         }
@@ -23,12 +29,10 @@ function BarraMenu() {
         setError('');
 
         try {
-            // Chama a API para buscar filmes
             const response = await FilmesService.getFilmsByTitle(query);
 
             if (Array.isArray(response.films) && response.success && response) {
                 const films = response.films;
-                // Navega para a página de resultados, passando os filmes
                 navigate(`/search?title=${encodeURIComponent(query)}`, { state: { films } });
             }
         } catch (err) {
@@ -38,24 +42,25 @@ function BarraMenu() {
         }
     };
 
-    // Função para lidar com mudanças no campo de pesquisa
     const handleChange = (event) => {
         setQuery(event.target.value);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Remove o token
+        setIsLoggedIn(false); // Atualiza o estado
+        navigate('/');
+    };
 
     return (
         <div className={styles.menu}>
-            {/* Div Responsavel pela Logo*/}
             <div id={styles.logo}>
-                <img src={logo} alt="logo" style={{height:'80%',width:'100%', paddingTop:'4px', }}/>
+                <img src={logo} alt="logo" style={{ height: '80%', width: '100%', paddingTop: '4px' }} />
             </div>
 
-            {/* Div Responsavel pelo campo de pesquisa*/}
             <div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.searchWrapper}>
-
                         <input
                             type="search"
                             id={styles.pesquisa}
@@ -64,7 +69,7 @@ function BarraMenu() {
                             placeholder="Pesquisar Filme"
                         />
                         <button type="submit" className={styles.searchButton}>
-                            {loading ? <FaSpinner className={styles.spinner}/> : <FaSearch className={styles.searchIcon}/>}
+                            {loading ? <FaSpinner className={styles.spinner} /> : <FaSearch className={styles.searchIcon} />}
                         </button>
                     </div>
                 </form>
@@ -77,10 +82,18 @@ function BarraMenu() {
             </div>
 
             <div className={styles.p_botao2}>
-                <button className={styles.botao2}> Entrar </button>
-                <button className={styles.botao2}> Cadastrar </button>
+                {isLoggedIn ? (
+                    <>
+                        <button className={styles.botao2} onClick={() => navigate('/perfil')}> Perfil </button>
+                        <button className={styles.botao2} onClick={handleLogout}> Sair </button>
+                    </>
+                ) : (
+                    <>
+                        <button className={styles.botao2} onClick={() => navigate('/entrar')}> Entrar </button>
+                        <button className={styles.botao2} onClick={() => navigate('/registrar')}> Cadastrar </button>
+                    </>
+                )}
             </div>
-
         </div>
     );
 }
