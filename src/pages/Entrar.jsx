@@ -26,7 +26,8 @@ const Entrar = () => {
         try {
             const userData = await AuthService.login(email, senha);
             console.log('Login bem-sucedido:', userData);
-            // Aqui você pode redirecionar o usuário ou armazenar dados no contexto/global state
+            // Redireciona o usuário para a página inicial após o login
+            navigate('/');
         } catch (error) {
             setMensagemErro(error.message); // Define a mensagem de erro
         }
