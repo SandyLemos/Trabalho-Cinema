@@ -38,7 +38,6 @@ function TelaPrincipal() {
                             height="400"
                             src={`https://www.youtube.com/embed/${filmePrincipal.trailer_url || ''}?cc_load_policy=0&showinfo=0&rel=0&modestbranding=1`}
                             title={`Trailer de ${filmePrincipal.titulo || 'Filme'}`}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             style={{border: 'none'}}
                         />
