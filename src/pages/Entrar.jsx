@@ -54,7 +54,7 @@ const Entrar = () => {
                     </div>
                     <div id="parte_info">
                         <ul>
-                            <li style={{ paddingBottom: '20px' }}>
+                            <li style={{ paddingBottom: '40px' }}>
                                 <h2>Email</h2>
                                 <input
                                     type="text"
