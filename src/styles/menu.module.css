@@ -31,6 +31,7 @@ div
     border-right: solid;
     display: flex;
     justify-content: flex-start;
+    cursor: pointer;
 }
 
 #pesquisa {

@@ -55,7 +55,13 @@ function BarraMenu() {
     return (
         <div className={styles.menu}>
             <div id={styles.logo}>
-                <img src={logo} alt="logo" style={{ height: '80%', width: '100%', paddingTop: '4px' }} />
+                <img
+                    src={logo}
+                    alt="logo"
+                    style={{height: '80%', width: '100%', paddingTop: '4px'}}
+                    tabIndex={0}
+                    onClick={() => navigate('/')}
+                />
             </div>
 
             <div>
@@ -76,7 +82,7 @@ function BarraMenu() {
             </div>
 
             <div className={styles.p_botao}>
-                <button className={styles.botao}> Menu </button>
+                <button className={styles.botao} onClick={() => navigate('/')}> Menu </button>
                 <button className={styles.botao}> Filmes </button>
                 <button className={styles.botao}> Programação </button>
             </div>
