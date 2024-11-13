@@ -10,25 +10,95 @@
     overflow: hidden;
 }
 
-#filmes_principais
-{
+#filmes_principais {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: end;
-    min-width: 30rem;
-    max-width: 85rem;
-    min-height: 25rem;
-    background-color: white;
-    margin-bottom: 8rem;
-
+    min-width: 30rem; /* Reduzido de 30rem */
+    max-width: 85rem; /* Reduzido de 85rem */
+    min-height: 10rem; /* Reduzido de 12rem */
+    max-height: 20rem; /* Reduzido de 40rem */
+    background-color: #1F1B24;
+    margin-bottom: 29rem;
 }
+
 
 .elementos_filmes_principais
 {
     margin-right: 2rem;
     color: white;
 }
+
+.carrossel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.carrossel_conteudo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.trailer_container {
+    flex: 2.3;
+    position: relative;
+    padding-bottom: 48.25%; /* Aspect ratio 16:9 */
+    height: 0;
+    overflow: hidden;
+    background-color: black;
+}
+
+.trailer_container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.info_filme {
+    flex: 1;
+    padding: 1rem;
+    color: #fff;
+    background-color: #1F1B24;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.generos_container{
+    flex-direction: column;
+    justify-content: flex-end;
+    display: flex;
+    height: 100%;
+}
+.spanGenres{
+
+    padding-top: 20px;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+
+.info_filme h1 {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-size: 3rem;
+}
+
+.info_filme p {
+    display: flex;
+    height: 70%;
+    font-size: 1.1rem;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 
 #botao_proximo
 {
@@ -77,6 +147,12 @@
 @media (max-width: 768px) {
     .cartaz {
         justify-content: center;
+    }
+}
+
+@media (max-width: 1130px) {
+    .carrossel_conteudo {
+        display: block;
     }
 }
 
