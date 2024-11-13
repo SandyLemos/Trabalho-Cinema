@@ -2,10 +2,9 @@ import api from "../utils/api.js";
 
 class SessaoRepository {
 
-    // Método para buscar sessões da semana
-    async getSessionByWeek() {
+    async getSessionByMonth() {
         try {
-            const response = await api.get('/sessions/this-week');
+            const response = await api.get('/sessions/with-future-sessions');
 
             if (response.data.success) {
                 return response.data.films;
