@@ -4,8 +4,6 @@ body{
     background: linear-gradient(to top, #ffc802 87%, #FFC800 88%);
     margin: 0px;
     font-family: "Montserrat", serif;
-
-
 }
 
 div{
@@ -18,10 +16,8 @@ div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
 }
-
-
 
 #logo{
     height: 345px;
@@ -29,7 +25,7 @@ div{
     border-radius: 50%;
     background-color: white;
     position: relative;
-    top: 50px;
+    top: 40px;
     z-index: 1;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -87,8 +83,6 @@ div{
 
 }
 
-
-
 #area_cadastro{
     width: 30%;
     height: 410px;
@@ -104,9 +98,7 @@ div{
 #cadastroIcone {
     height: 50px;
     width: 50px;
-    position: absolute;
-    top: 15px;
-    left: 12px;
+    position: relative;
 }
 
 #cabecalho{
@@ -119,19 +111,20 @@ div{
 }
 
 #parte_info{
+    top: 5%;
     display: flex;
     flex-direction: column;
-    padding-left: 15px;
+    padding-left: 10%;
     position: relative;
     flex-grow: 1;
-    align-items: flex-start;
+    align-content: flex-start;
 }
 
 /*Caixas de Texto e Senha*/
 input{
     position: absolute;
-    border-radius: 10px;
-    height: 23px;
+    border-radius: 20px;
+    height: 30px;
     width: 75%;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /*Adcionando sombramento as caixas de texto*/
     padding-left: 10px;
@@ -142,11 +135,9 @@ input[type=text]{
 }
 
 #parte_botao{
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: flex-end;
-
-
 }
 
 /* Import Google font - Poppins */
@@ -259,6 +250,13 @@ input[type=text]{
       width: 30%;
   }
 
+  #cadastroIcone{
+      left: 5%;
+      height: 90%;
+      top: 2%;
+      transform: translateX(-40%);
+  }
+
   .fig1 {
     width: 80px;
     height: 70px;
@@ -293,6 +291,13 @@ input[type=text]{
       width: 30%;
       padding: 12px;
   }
+
+  #cadastroIcone{
+    left: 5%;
+    height: 90%;
+    top: 2%;
+    transform: translateX(-40%);
+}
   .fig1 {
     width: 80px;
     height: 70px;
@@ -306,7 +311,7 @@ input[type=text]{
     height: 150px; /* Altura do ícone */
     position: absolute; /* Permite posicionamento absoluto */
     left: 32%; /* Centraliza horizontalmente */
-    transform: translate(-50%, 30px);
+    transform: translate(-50%, 10%);
 }
 }
 
@@ -346,6 +351,14 @@ input[type=text]{
     max-width: 100px; /* Define um limite para evitar que o botão fique muito largo */
     padding: 1vh 1vw; /* Ajusta o padding baseado no tamanho da tela */
   }
+
+  #cadastroIcone{
+    left: 5%;
+    height: 90%;
+    top: 2%;
+    transform: translateX(-40%);
+}
+
   .fig1 {
       width: 10vw;
       height: 10vh;
@@ -356,7 +369,7 @@ input[type=text]{
       width: 20vw;
       height: 20vh;
       left: 33%;
-      transform: translate(-50%, 45px);
+      transform: translate(-50%, 10%);
   }
 }
 
@@ -376,6 +389,13 @@ input[type=text]{
       padding: 1.5vh;
   }
 
+  #cadastroIcone{
+    left: 5%;
+    height: 90%;
+    top: 2%;
+    transform: translateX(-40%);
+ }
+
   .fig1 {
     width: 10vw;
     height: 10vh;
@@ -387,6 +407,6 @@ input[type=text]{
     width: 20vw;
     height: 20vh;
     left: 28%;
-    transform: translate(-50%, 40px);
+    transform: translate(-50%, 10%);
   }
 }
