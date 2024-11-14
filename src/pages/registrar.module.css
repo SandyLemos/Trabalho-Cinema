@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    font-family: "Montserrat", serif;
+    background: linear-gradient(to top, #ffc802 87%, #FFC800 88%);
+}
+
+.centralizar{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#logo{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 345px;
+    width: 350px;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+    top: 30px; 
+    z-index: 1;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#icone{
+    position: relative;
+    width: 70%;
+    height: 50%;
+    top: 25%;
+}
+
+.enfeite{
+    height: 200px;
+    width: 50%;
+    position: absolute;
+    z-index: 0;
+    top: 100px;
+}
+
+#esquerda{
+  
+    left: 0px;
+    
+}
+
+#direita{
+    right: 0px;
+}
+
+
+#area_cadastro
+{
+  margin-top: 15rem;
+  width: 45rem;
+  height: 60rem;
+  background-color: white;
+  border-radius: 1rem;
+  border: solid;
+  margin-top:7rem;
+  margin-bottom: 5rem;
+
+}
+
+.input{
+  border-radius: 0.2rem;
+  height: 2.3rem;
+  width: 100%;
+
+}
+
+.input2{
+  border-radius: 0.2rem;
+  height: 2.3rem;
+  width: 50%;
+
+}
+
+#cabecalho
+{
+  width: 100%;
+  height: 5rem;
+  border-bottom: solid;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 0.8rem;
+  
+}
+
+#informacoes
+{
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  margin-bottom: 2rem;
+  gap: 0rem;
+
+}
+
+#sobre
+{
+  width: 93%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: 
+  "nome nome"
+  "cpf data_nasc";
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+#container
+{
+  width: 93%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: 
+  "parte resto";
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.h2{
+  padding-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+    left: 375px;
+    width: 250px;
+    position: relative;
+    padding: 10px 22px;
+    border-radius: 6px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: #7d2ae8;
+    transition: all 0.2s ease;
+    font-family:"Montserrat";
+  }
+
+.check{
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+    
+
+}
+
+.checkbox{
+  width: 1rem;
+  height: 1rem;
+  left: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.button{
+    width: auto;
+    margin: 0.5rem;
+    padding: 10px 30px;
+    border-radius: 8px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: #7d2ae8;
+    transition: all 0.2s ease;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    left: 38%;
+}
+
+  .button:active {
+    transform: scale(0.96);
+  }
+  .button:before,
+  .button:after {
+    position: absolute;
+    content: "";
+    width: 150%;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+    z-index: -1000;
+    background-repeat: no-repeat;
+  }
+  .button.animate::before {
+    top: -70%;
+    background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, transparent 20%, #7d2ae8 20%, transparent 30%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+      10% 10%, 18% 18%;
+    animation: greentopBubbles ease-in-out 0.6s forwards infinite;
+  }
+  @keyframes greentopBubbles {
+    0% {
+      background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+        40% 90%, 55% 90%, 70% 90%;
+    }
+    50% {
+      background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+        50% 50%, 65% 20%, 90% 30%;
+    }
+    100% {
+      background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+        50% 40%, 65% 10%, 90% 20%;
+      background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    }
+  }
+  .button.animate::after {
+    bottom: -70%;
+    background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+      radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+    background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+    animation: greenbottomBubbles ease-in-out 0.6s forwards infinite;
+  }
+  @keyframes greenbottomBubbles {
+    0% {
+      background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+        70% -10%, 70% 0%;
+    }
+    50% {
+      background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+        105% 0%;
+    }
+    100% {
+      background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+        110% 10%;
+      background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    }
+  }
+
+  
+
+  
+  
