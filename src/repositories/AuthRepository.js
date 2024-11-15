@@ -1,4 +1,4 @@
-import api from '../utils/api';
+import {setAuthToken, api} from '../utils/api';
 
 class AuthRepository {
     async login(email, senha) {
@@ -8,6 +8,7 @@ class AuthRepository {
                 senha,
             }, );
             localStorage.setItem('token', response.data.token);
+            setAuthToken(response.data.token);
             return response.data; // Retorna os dados do usuário ou token
         } catch (error) {
             // Verifica se o erro tem a estrutura esperada
@@ -44,6 +45,7 @@ class AuthRepository {
                 codigo_ref,
             }, );
             localStorage.setItem('token', response.data.token);
+            setAuthToken(response.data.token);
             return response.data; // Retorna os dados do usuário ou token
         } catch (error) {
             // Verifica se o erro tem a estrutura esperada
