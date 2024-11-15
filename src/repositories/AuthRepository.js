@@ -51,9 +51,9 @@ class AuthRepository {
                 const errorData = error.response.data;
 
                 // Lida com diferentes estruturas de erro
-                if (Array.isArray(errorData.erro)) {
+                if (Array.isArray(errorData.errors)) {
                     // Caso tenha um array de erros, pega a primeira mensagem
-                    const primeiroErro = errorData.erro[0].msg;
+                    const primeiroErro = errorData.errors[0].msg;
                     throw new Error(primeiroErro || "Erro desconhecido");
                 } else if (errorData.msg) {
                     // Se houver uma mensagem, usa essa mensagem

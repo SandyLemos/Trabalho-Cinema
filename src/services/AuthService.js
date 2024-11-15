@@ -24,7 +24,7 @@ class AuthService {
             );
             return registeredUserData; // Retorna os dados do usuário registrado
         } catch (error) {
-            throw new Error(error.message);
+            throw new Error(error.message); // Retorna o erro se ocorrer
         }
     }
 }
