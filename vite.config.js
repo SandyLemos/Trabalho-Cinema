@@ -17,6 +17,11 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  css: {
+    modules:{
+      scopeBehaviour: 'local'
+    }
+  },
   server: {
     open: true,   // Abre o navegador automaticamente ao iniciar o servidor
     hmr: true,    // Hot Module Replacement para desenvolvimento mais rápido
