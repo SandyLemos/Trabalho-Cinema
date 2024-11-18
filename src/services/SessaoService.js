@@ -56,6 +56,63 @@ class SessaoService {
             throw e;
         }
     }
+
+
+    async getSessionByFilmId(id) {
+        try {
+            const response = await SessaoRepository.getSessionByFilmId(id);
+
+            if (response.success) {
+                const { session } = response;
+
+                const formattedSessions = this.mapSessions(session.sessoes);
+
+                return {
+                    id: session.id,
+                    titulo: session.titulo,
+                    slug: session.slug,
+                    sinopse: session.sinopse,
+                    data_lancamento: new Date(session.data_lancamento),
+                    duracao: `${Math.floor(session.duracao / 60)}h ${session.duracao % 60}min`,
+                    classificacao_etaria: session.classificacao_etaria,
+                    poster: session.poster,
+                    nota_imdb: session.nota_imdb,
+                    trailer_url: session.trailer_url,
+                    generos: session.generos.map((g) => g.nome_genero),
+                    sessoes: formattedSessions
+                };
+            } else {
+                throw new Error("Formato de resposta inesperado");
+            }
+        } catch (e) {
+            console.error("Erro ao buscar sessões:", e);
+            throw e;
+        }
+    }
+
+    mapSessions(sessoes) {
+        const sessionsByDate = {};
+
+        sessoes.forEach((sessao) => {
+            const date = new Date(sessao.data_sessao).toISOString().split('T')[0];
+            const time = new Date(sessao.data_sessao).toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit',
+            });
+
+            if (!sessionsByDate[date]) {
+                sessionsByDate[date] = {
+                    date,
+                    sala: sessao.sala,
+                    times: [],
+                };
+            }
+
+            sessionsByDate[date].times.push(time);
+        });
+
+        return Object.values(sessionsByDate);
+    }
 }
 
 export default new SessaoService();
