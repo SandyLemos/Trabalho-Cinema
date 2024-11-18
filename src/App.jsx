@@ -9,6 +9,7 @@ import Dashboard from "./pages/components/Dashboard.jsx";
 import CriarSala from "./pages/Salas/CriarSala.jsx";
 import ListarSalas from "./pages/Salas/ListarSalas.jsx";
 import EditarSala from "./pages/Salas/EditarSala.jsx";
+import TelaFilme from "./pages/TelaFilme.jsx";
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
                     <Route path="/criar-sala" element={<CriarSala />} />
                     <Route path="/listar-salas" element={<ListarSalas />} />
                     <Route path="/editar-sala/:id_sala" element={<EditarSala />} />
+                    <Route path="/filme/:id/:slug" element={<TelaFilme />} />
                 </Route>
                 <Route path="/entrar" element={<Entrar />} />
                 <Route path="/registrar" element={<Registrar />} />

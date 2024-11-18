@@ -3,10 +3,12 @@ import styles from "../styles/tela.principal.module.css";
 import seta from "../assets/seta.png";
 import classNames from 'classnames';
 import SessaoService from "../services/SessaoService.js";
+import {useNavigate} from "react-router-dom";
 
 function TelaPrincipal() {
     const [filmes, setFilmes] = useState({ principal: [], exibicao: [], emBreve: [] });
     const [indexPrincipal, setIndexPrincipal] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchFilmes = async () => {
@@ -23,6 +25,10 @@ function TelaPrincipal() {
 
     const handleNext = () => {
         setIndexPrincipal((prevIndex) => (prevIndex + 1) % filmes.principal.length);
+    };
+
+    const handleClickFilme = (id, slug) => {
+        navigate(`/filme/${id}/${slug}`); // Redireciona para a página do filme com base no slug
     };
 
     const filmePrincipal = filmes.principal[indexPrincipal] || {};
@@ -75,7 +81,12 @@ function TelaPrincipal() {
             <h2 style={{color: 'white', marginBottom: '2rem'}}>Em Exibição</h2>
             <div className={styles.cartaz}>
                 {filmes.exibicao.map((filme, index) => (
-                    <div className={styles.filme_cartaz} key={index}>
+                    <div
+                        className={styles.filme_cartaz}
+                        key={index}
+                        onClick={() => handleClickFilme(filme.id, filme.slug)} // Redireciona ao clicar
+                        style={{cursor: 'pointer'}}
+                    >
                         <div className={styles.parte_imagem}>
                             <img src={filme.poster} alt={filme.slug}/>
                         </div>
