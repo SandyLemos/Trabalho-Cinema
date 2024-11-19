@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 body{
-    background: linear-gradient(to top, #ffc802 87%, #FFC800 88%);
+    background: #FFD700;
     margin: 0px;
     font-family: "Montserrat", serif;
 }

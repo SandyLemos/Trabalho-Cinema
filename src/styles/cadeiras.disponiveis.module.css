@@ -1,7 +1,7 @@
 .container {
 
     padding: 20px;
-    background-color: #1F1B24;
+    background-color: #1e1e2e;
     align-items: center;
     color: #ffffff;
     max-width: 1200px;
@@ -80,7 +80,7 @@
 .seat {
     width: 40px;
     height: 40px;
-    background-color: #333;
+    background-color: #313244;
     color: #fff;
     display: flex;
     justify-content: center;
@@ -140,9 +140,21 @@
 .reserved {
     background-color: red; /* Cor para assentos reservados */
     cursor: not-allowed; /* Desativa o cursor para indicar que não pode ser clicado */
-    color: white;
+}
+
+.reserved:hover {
+    background-color: red; /* Cor para assentos reservados */
+    cursor: not-allowed; /* Desativa o cursor para indicar que não pode ser clicado */
 }
 
 .inexistent {
-    display: none;
+    cursor: default;
+    background-color: #1e1e2e;
+    transition: none;
+
+}
+.inexistent:hover{
+    cursor: default;
+    background-color: #1e1e2e;
+    transition: none;
 }
