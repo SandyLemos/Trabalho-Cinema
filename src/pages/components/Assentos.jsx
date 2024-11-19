@@ -63,7 +63,7 @@ function Assentos({ id_sessao }) {
                             }
                         }}
                     >
-                        {isExisting ? `${seat.linha}${seat.numero}` : 'X'}
+                        {isExisting ? `${seat.linha}${seat.numero}` : ''}
                     </div>
                 );
             }
@@ -98,7 +98,7 @@ function Assentos({ id_sessao }) {
                 </div>
             </div>
             <div className={styles.tableRepresentation}>
-                <p>Legenda: Assentos inexistentes (X), reservados (vermelho), selecionados (verde).</p>
+                <p> Reservados 🟥 | Selecionados 🟩</p>
                 <button
                     className={styles.submitButton}
                     disabled={loading}
