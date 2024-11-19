@@ -102,6 +102,7 @@ class SessaoService {
 
             if (!sessionsByDate[date]) {
                 sessionsByDate[date] = {
+                    id_sessao: sessao.id_sessao,
                     date,
                     sala: sessao.sala,
                     times: [],
@@ -113,6 +114,58 @@ class SessaoService {
 
         return Object.values(sessionsByDate);
     }
+
+    async getSessionById(id_sessao) {
+        try {
+            // Chama o repositório para obter uma sessão específica pelo ID
+            const response = await SessaoRepository.getSessionById(id_sessao);
+            if (response.success) {
+                const { session } = response;
+
+                // Mapeando a resposta para um formato estruturado
+                const mappedSession = {
+                    id_sessao: session.id,
+                    data_sessao: new Date(session.data_sessao), // Convertendo para objeto Date
+                    filme: {
+                        id: session.filme.id,
+                        titulo: session.filme.titulo,
+                        slug: session.filme.slug,
+                        sinopse: session.filme.sinopse,
+                        data_lancamento: new Date(session.filme.data_lancamento),
+                        duracao: `${Math.floor(session.filme.duracao / 60)}h ${session.filme.duracao % 60}min`,
+                        classificacao_etaria: session.filme.classificacao_etaria,
+                        poster: session.filme.poster,
+                        trailer_url: session.filme.trailer_url,
+                        nota_imdb: session.filme.nota_imdb
+                    },
+                    sala: {
+                        id: session.sala.id,
+                        nome: session.sala.nome,
+                        capacidade: session.sala.capacidade,
+                        tipo: session.sala.tipo.descricao
+                    },
+                    precos: session.precos.map(preco => ({
+                        id: preco.id,
+                        valor: preco.valor,
+                        tipo: preco.tipo
+                    })),
+                    cadeirasReservadas: session.cadeirasReservadas.map(cadeira => ({
+                        id_cadeira: cadeira.id_cadeira,
+                        linha: cadeira.linha,
+                        numero: cadeira.numero
+                    }))
+                };
+
+                return mappedSession;
+            } else {
+                throw new Error("Formato de resposta inesperado");
+            }
+        } catch (e) {
+            console.error("Erro ao buscar sessão pelo ID:", e);
+            throw e;
+        }
+    }
+
 }
 
 export default new SessaoService();

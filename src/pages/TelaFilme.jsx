@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../styles/tela.filmes.module.css';
-import BarraMenu from './components/BarraMenu';
 import SessionService from '../services/SessaoService.js';
 import { FaHourglass } from "react-icons/fa";
+import Assentos from "./components/Assentos.jsx";
 
 function TelaFilme() {
     const { id, slug } = useParams();
@@ -17,12 +17,12 @@ function TelaFilme() {
     const [salasDisponiveis, setSalasDisponiveis] = useState([]);
     const [datasDisponiveis, setDatasDisponiveis] = useState([]);
     const [horasDisponiveis, setHorasDisponiveis] = useState([]);
+    const [idSessao, setIdSessao] = useState(null)
 
     useEffect(() => {
         async function fetchFilme() {
             try {
                 const data = await SessionService.getSessionByFilmId(parseInt(id));
-
                 if (!data) {
                     throw new Error('Filme não encontrado');
                 }
@@ -70,6 +70,23 @@ function TelaFilme() {
         }
     }, [selectedHora, selectedData, filme]);
 
+    useEffect(() => {
+        if (filme?.sessoes && selectedData && selectedHora && selectedSala) {
+            // Encontra a sessão completa e armazena o ID da sessão
+            const sessaoSelecionada = filme.sessoes.find(
+                (sessao) =>
+                    sessao.date === selectedData &&
+                    sessao.times.includes(selectedHora) &&
+                    sessao.sala === selectedSala
+            );
+
+            if (sessaoSelecionada) {
+                setIdSessao(sessaoSelecionada.id_sessao); // Atualiza o estado com o ID da sessão
+                console.log('ID da Sessão Selecionada:', sessaoSelecionada.id_sessao); // Exibe o ID da sessão no console
+            }
+        }
+    }, [selectedSala, selectedHora, selectedData, filme]);
+
     if (loading) {
         return (
             <div className={styles.centralizar}>
@@ -90,100 +107,103 @@ function TelaFilme() {
     }
 
     return (
-            <div id={styles.centralizar} className={styles.divs}>
-                <div id={styles.info} className={styles.divs}>
-                    <div id={styles.info_imagem}>
-                        <img src={filme?.poster || ""} alt={filme?.titulo || "Filme"} id={styles.imagem} />
+        <div id={styles.centralizar} className={styles.divs}>
+            <div id={styles.info} className={styles.divs}>
+                <div id={styles.info_imagem}>
+                    <img src={filme?.poster || ""} alt={filme?.titulo || "Filme"} id={styles.imagem}/>
+                </div>
+
+                <div id={styles.info_descricao}>
+                    <h1 style={{fontSize: '40px'}}>{filme?.titulo || 'Filme'}</h1>
+                    <div id={styles.classificadores}>
+                        {filme?.generos && filme.generos.length > 0 ? (
+                            filme.generos.map((genero, index) => (
+                                <div key={index} className={styles.blocos_c}>
+                                    {genero}
+                                </div>
+                            ))
+                        ) : (
+                            <div className={styles.blocos_c}>Gêneros não disponíveis</div>
+                        )}
+                    </div>
+                    <div id={styles.classificadores}>
+                        <div className={styles.blocos_extras}>{'IMDB ' + filme?.nota_imdb || 'IMDB'}</div>
+                        <div className={styles.blocos_extras}>{'+' + filme?.classificacao_etaria || '0'}</div>
+                        <div className={styles.blocos_extras}>
+                            <FaHourglass style={{marginRight: '8px'}}/>
+                            {filme?.duracao || '0'}
+                        </div>
+                    </div>
+                    <p>{filme?.sinopse || 'Sinopse não disponível.'}</p>
+                </div>
+
+                <div id={styles.selecaoSessao}>
+                    {/* Primeiro a Data */}
+                    <div className={styles.selecaoItem}>
+                        <h4>Selecione a Data</h4>
+                        <select
+                            value={selectedData}
+                            onChange={(e) => setSelectedData(e.target.value)}
+                            className={styles.selecaoInput}
+                        >
+                            <option value="">Escolha uma data</option>
+                            {datasDisponiveis.map((data, index) => (
+                                <option key={index} value={data}>
+                                    {data}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
-                    <div id={styles.info_descricao}>
-                        <h1 style={{ fontSize: '40px' }}>{filme?.titulo || 'Filme'}</h1>
-                        <div id={styles.classificadores}>
-                            {filme?.generos && filme.generos.length > 0 ? (
-                                filme.generos.map((genero, index) => (
-                                    <div key={index} className={styles.blocos_c}>
-                                        {genero}
-                                    </div>
-                                ))
+                    {/* Depois a Hora */}
+                    <div className={styles.selecaoItem}>
+                        <h4>Selecione a Hora</h4>
+                        <select
+                            value={selectedHora}
+                            onChange={(e) => setSelectedHora(e.target.value)}
+                            className={styles.selecaoInput}
+                            disabled={!selectedData}
+                        >
+                            <option value="">Escolha uma hora</option>
+                            {horasDisponiveis.length === 0 ? (
+                                <option value="">Nenhuma hora disponível</option>
                             ) : (
-                                <div className={styles.blocos_c}>Gêneros não disponíveis</div>
+                                horasDisponiveis.map((hora, index) => (
+                                    <option key={index} value={hora}>
+                                        {hora}
+                                    </option>
+                                ))
                             )}
-                        </div>
-                        <div id={styles.classificadores}>
-                            <div className={styles.blocos_extras}>{'IMDB ' + filme?.nota_imdb || 'IMDB'}</div>
-                            <div className={styles.blocos_extras}>{'+' + filme?.classificacao_etaria || '0'}</div>
-                            <div className={styles.blocos_extras}>
-                                <FaHourglass style={{ marginRight: '8px' }} />
-                                {filme?.duracao || '0'}
-                            </div>
-                        </div>
-                        <p>{filme?.sinopse || 'Sinopse não disponível.'}</p>
+                        </select>
                     </div>
 
-                    <div id={styles.selecaoSessao}>
-                        {/* Primeiro a Data */}
-                        <div className={styles.selecaoItem}>
-                            <h4>Selecione a Data</h4>
-                            <select
-                                value={selectedData}
-                                onChange={(e) => setSelectedData(e.target.value)}
-                                className={styles.selecaoInput}
-                            >
-                                <option value="">Escolha uma data</option>
-                                {datasDisponiveis.map((data, index) => (
-                                    <option key={index} value={data}>
-                                        {data}
+                    {/* Por último a Sala */}
+                    <div className={styles.selecaoItem}>
+                        <h4>Selecione a Sala</h4>
+                        <select
+                            value={selectedSala}
+                            onChange={(e) => setSelectedSala(e.target.value)}
+                            className={styles.selecaoInput}
+                            disabled={!selectedHora}
+                        >
+                            <option value="">Escolha uma sala</option>
+                            {salasDisponiveis.length === 0 ? (
+                                <option value="">Nenhuma sala disponível</option>
+                            ) : (
+                                salasDisponiveis.map((sala, index) => (
+                                    <option key={index} value={sala}>
+                                        {sala}
                                     </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Depois a Hora */}
-                        <div className={styles.selecaoItem}>
-                            <h4>Selecione a Hora</h4>
-                            <select
-                                value={selectedHora}
-                                onChange={(e) => setSelectedHora(e.target.value)}
-                                className={styles.selecaoInput}
-                                disabled={!selectedData}
-                            >
-                                <option value="">Escolha uma hora</option>
-                                {horasDisponiveis.length === 0 ? (
-                                    <option value="">Nenhuma hora disponível</option>
-                                ) : (
-                                    horasDisponiveis.map((hora, index) => (
-                                        <option key={index} value={hora}>
-                                            {hora}
-                                        </option>
-                                    ))
-                                )}
-                            </select>
-                        </div>
-
-                        {/* Por último a Sala */}
-                        <div className={styles.selecaoItem}>
-                            <h4>Selecione a Sala</h4>
-                            <select
-                                value={selectedSala}
-                                onChange={(e) => setSelectedSala(e.target.value)}
-                                className={styles.selecaoInput}
-                                disabled={!selectedHora}
-                            >
-                                <option value="">Escolha uma sala</option>
-                                {salasDisponiveis.length === 0 ? (
-                                    <option value="">Nenhuma sala disponível</option>
-                                ) : (
-                                    salasDisponiveis.map((sala, index) => (
-                                        <option key={index} value={sala}>
-                                            {sala}
-                                        </option>
-                                    ))
-                                )}
-                            </select>
-                        </div>
+                                ))
+                            )}
+                        </select>
                     </div>
                 </div>
             </div>
+            <div className={styles.assentos}>
+                <Assentos id_sessao={idSessao}/>
+            </div>
+        </div>
     );
 }
 

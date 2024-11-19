@@ -31,6 +31,21 @@ class SessaoRepository {
             throw e;
         }
     }
+
+    async getSessionById(id){
+        try {
+            const response = await api.get(`/sessions/${id}`);
+
+            if (response.data.success) {
+                return response.data;
+            } else {
+                throw new Error("Formato de resposta inesperado");
+            }
+        } catch (e) {
+            console.error("Erro ao buscar a sessão:", e);
+            throw e;
+        }
+    }
 }
 
 export default new SessaoRepository();

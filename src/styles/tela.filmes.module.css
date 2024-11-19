@@ -22,6 +22,7 @@ body
 #info{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     width: 80%;
     height: 25rem;
     background-color: #1F1B24;
@@ -31,7 +32,7 @@ body
 
 #info_imagem
 {
-    width: 30%;
+    width: 18rem;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -124,9 +125,12 @@ body
 }
 
 #selecaoSessao {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     margin-top: 20px;
     padding: 20px;
-    width: 30% !important;
+    width: 18rem !important;
 
 }
 
@@ -166,4 +170,10 @@ body
 
 .selecaoItem:first-child h4 {
     margin-top: 0;
+}
+
+.assentos {
+    margin-top: 2rem;
+    width: 80%;
+    height: 100%;
 }

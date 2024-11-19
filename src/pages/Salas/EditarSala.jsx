@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import styles from '../../styles/criar.sala.module.css';
 import SalaService from "../../services/SalaService.js";

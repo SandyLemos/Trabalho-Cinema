@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import styles from '../../styles/criar.sala.module.css';
-import axios from 'axios';
 import SalaRepository from "../../repositories/SalaRepository.js";
 import SalaService from "../../services/SalaService.js";
 
