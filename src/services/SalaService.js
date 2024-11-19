@@ -41,7 +41,7 @@ class RoomService {
         }
     }
 
-    // Metodo para obter os tipos de salas
+    // Metodo para obter todas as salas
     async getRooms() {
         try {
             const rooms = await SalaRepository.getRooms();
@@ -85,6 +85,35 @@ class RoomService {
         }
     }
 
+    // Função para adicionar cadeiras à sala
+    async addChairsToRoom(id_sala, chairsData) {
+        try {
+            const response = await SalaRepository.addChairsToRoom(id_sala, chairsData);
+            if (response.success) {
+                return response;
+            } else {
+                throw new Error("Falha ao adicionar as cadeiras.");
+            }
+        } catch (e) {
+            console.error("Erro ao adicionar cadeiras:", e);
+            throw e;
+        }
+    }
+
+    // Função para remover cadeira da sala
+    async removeChairFromRoom(id_cadeira) {
+        try {
+            const response = await SalaRepository.deleteChairsToRoom(id_cadeira);
+            if (response.success) {
+                return response;
+            } else {
+                throw new Error("Falha ao remover a cadeira.");
+            }
+        } catch (e) {
+            console.error("Erro ao remover cadeira:", e);
+            throw e;
+        }
+    }
 }
 
 export default new RoomService();

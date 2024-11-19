@@ -1,4 +1,4 @@
-import {api, setAuthToken} from "../utils/api.js";  // Supondo que api.js seja o arquivo de configuração do Axios.
+import {api} from "../utils/api.js";
 
 class RoomRepository {
     // Metodo para criar uma nova sala
@@ -98,7 +98,13 @@ class RoomRepository {
 
     async deleteRoom(id) {
         try {
-            const response = await api.delete(`/rooms/${id}`);
+            const token = localStorage.getItem('token')
+            const response = await api.delete(`/rooms/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
             if (response.data.success) {
                 return response.data;
@@ -107,6 +113,27 @@ class RoomRepository {
             }
         } catch (e) {
             console.error("Erro ao apagar a sala", e);
+            throw e;
+        }
+    }
+
+    async deleteChairsToRoom(chairId){
+        try {
+            const token = localStorage.getItem('token')
+            const response = await api.delete(`chairs/${chairId}`,
+                {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.data.success) {
+                return response.data;
+            } else {
+                throw new Error("Erro ao apagar cadeira");
+            }
+        } catch (e) {
+            console.error("Erro ao apagar cadeira:", e);
             throw e;
         }
     }

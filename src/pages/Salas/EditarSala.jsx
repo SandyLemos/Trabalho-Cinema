@@ -5,35 +5,107 @@ import SalaService from "../../services/SalaService.js";
 import SalaRepository from "../../repositories/SalaRepository.js";
 
 function EditarSala() {
-    const { id_sala } = useParams();  // Pegando o parâmetro id_sala da URL
-    const [selectedSeats, setSelectedSeats] = useState([]);  // Cadeiras selecionadas
+    const { id_sala } = useParams();
+    const [selectedSeats, setSelectedSeats] = useState([]);
     const [salaName, setSalaName] = useState('');
     const [salaType, setSalaType] = useState('');
     const [ativo, setAtivo] = useState(true);
     const [loading, setLoading] = useState(false);
-    const seatRows = 10;  // Número de linhas de cadeiras
-    const seatColumns = 10;  // Número de colunas de cadeiras
+    const seatRows = 10;
+    const seatColumns = 10;
     const [roomTypes, setRoomTypes] = useState([]);
 
-    // Função para alternar a seleção de cadeiras ou excluir se já estiver selecionada
+    // Função para alternar a seleção de cadeira
     const toggleSeatSelection = (row, col) => {
-        const seat = { linha: row, numero: col };
-        const seatIndex = selectedSeats.findIndex(s => s.linha === seat.linha && s.numero === seat.numero);
+        const existingSeat = selectedSeats.find(s => s.linha === row && s.numero === col);
 
-        if (seatIndex > -1) {
+        if (existingSeat) {
             // Se a cadeira já está na seleção, perguntamos se o usuário deseja excluir
             const confirmDelete = window.confirm('Deseja excluir esta cadeira?');
             if (confirmDelete) {
-                // Remove cadeira da seleção
-                setSelectedSeats(prevSeats => prevSeats.filter(s => s.linha !== seat.linha || s.numero !== seat.numero));
+                handleRemoveSeat(existingSeat);  // Remover cadeira
             }
         } else {
-            // Adiciona cadeira à seleção
-            setSelectedSeats(prevSeats => [...prevSeats, seat]);
+            // Se não está na seleção, perguntamos se deseja adicionar
+            const confirmAdd = window.confirm('Deseja adicionar esta cadeira?');
+            if (confirmAdd) {
+                handleAddSeat(row, col);  // Adicionar cadeira
+            }
         }
     };
 
-    // Carregar os tipos de sala
+    // Função para adicionar cadeira à seleção
+    const handleAddSeat = async (row, col) => {
+        const seat = { linha: row, numero: col, id_cadeira: null };  // Inicialmente sem ID
+
+        setLoading(true); // Define o estado de loading como verdadeiro
+        try {
+            const chairsData = [
+                {
+                    linha: row,   // Exemplo de valor: 'A'
+                    numero: col,  // Exemplo de valor: 1
+                }
+            ];
+
+            // Chama o serviço para adicionar a cadeira
+            const response = await SalaService.addChairsToRoom(id_sala, chairsData);
+            console.log("Resposta do backend:", response);
+
+            if (response.success) {
+                // Extrai as informações da cadeira da resposta
+                const newChair = response.results[0].newChair;
+
+                // Atribui o ID à cadeira
+                seat.id_cadeira = newChair.id_cadeira;
+
+                // Atualiza o estado de selectedSeats com a nova cadeira
+                setSelectedSeats(prevSeats => [...prevSeats, seat]); // Adiciona a cadeira à lista
+
+                alert("Cadeira adicionada com sucesso!");
+            } else {
+                alert("Erro ao adicionar cadeira.");
+            }
+        } catch (error) {
+            console.error("Erro ao adicionar cadeira:", error);
+            alert("Erro ao adicionar cadeira.");
+        } finally {
+            setLoading(false); // Define o estado de loading como falso
+        }
+    };
+
+
+    // Função para remover cadeira da seleção
+    const handleRemoveSeat = async (seat) => {
+        if (!seat.id_cadeira) {
+            // Se a cadeira não tem id, apenas remove da seleção local (sem interagir com a API)
+            setSelectedSeats(prevSeats => prevSeats.filter(s => s.linha !== seat.linha || s.numero !== seat.numero));
+            alert("Cadeira removida da seleção (não foi cadastrada no banco).");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            // Enviando a requisição para remover a cadeira
+            const response = await SalaService.removeChairFromRoom(seat.id_cadeira);
+
+            // Verificando se a resposta da API indica sucesso
+            if (response.success) {
+                // A resposta indica sucesso, então removemos a cadeira localmente
+                setSelectedSeats(prevSeats => prevSeats.filter(s => s.id_cadeira !== seat.id_cadeira));
+                alert("Cadeira removida com sucesso!");
+            } else {
+                // Se não houver sucesso, mostramos uma mensagem de erro
+                alert("Erro ao remover cadeira: " + response.msg || "Erro desconhecido.");
+            }
+        } catch (error) {
+            // Se ocorrer algum erro durante a requisição
+            console.error("Erro ao remover cadeira:", error);
+            alert("Erro ao remover cadeira.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         const fetchRoomTypes = async () => {
             try {
@@ -52,12 +124,13 @@ function EditarSala() {
                     setSalaType(room.id_tipo_sala);
                     setAtivo(room.ativo);
 
-                    // Carregando as cadeiras associadas à sala
+                    // Mapeia as cadeiras com seus dados (id_cadeira ou null)
                     const chairs = room.cadeiras.map(cadeira => ({
+                        id_cadeira: cadeira.id_cadeira || null, // Se não tiver id, coloca null
                         linha: cadeira.linha,
                         numero: cadeira.numero,
                     }));
-                    setSelectedSeats(chairs);  // As cadeiras já cadastradas
+                    setSelectedSeats(chairs);
                 } catch (error) {
                     console.error("Erro ao carregar dados da sala:", error);
                 }
@@ -68,38 +141,15 @@ function EditarSala() {
         fetchRoomData();
     }, [id_sala]);
 
-    // Função para salvar as alterações da sala
-    const handleSaveRoom = async () => {
-        setLoading(true);
-        try {
-            // Formatando as cadeiras para o formato esperado pelo backend
-            const chairsData = selectedSeats.map(seat => ({
-                linha: seat.linha,
-                numero: seat.numero,
-            }));
-
-            const response = await SalaService.updateRoomWithChairs(id_sala, salaName, salaType, ativo, chairsData);
-
-            if (response.success) {
-                alert("Sala atualizada com sucesso!");
-            } else {
-                alert("Erro ao atualizar a sala");
-            }
-        } catch (error) {
-            console.error("Erro:", error);
-            alert("Erro ao salvar sala");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // Função para renderizar os assentos
     const renderSeats = () => {
         let seats = [];
         for (let row = 1; row <= seatRows; row++) {
             for (let col = 1; col <= seatColumns; col++) {
                 const seat = { linha: String.fromCharCode(64 + row), numero: col };
+
+                // Verifique se a cadeira já foi selecionada
                 const isSelected = selectedSeats.some(s => s.linha === seat.linha && s.numero === seat.numero);
+
                 seats.push(
                     <div
                         key={`${seat.linha}${seat.numero}`}
@@ -112,6 +162,11 @@ function EditarSala() {
             }
         }
         return seats;
+    };
+
+    const handleSaveRoom = async () => {
+        // Função para salvar os dados da sala
+        // Implemente aqui a lógica para salvar os dados da sala e suas configurações
     };
 
     return (
@@ -144,6 +199,7 @@ function EditarSala() {
                     </select>
                 </div>
             </form>
+
             <div className={styles.layoutContainer}>
                 <div className={styles.rowLabels}>
                     {Array.from({ length: seatRows }, (_, index) => (
@@ -157,7 +213,6 @@ function EditarSala() {
                 </div>
             </div>
             <div className={styles.tableRepresentation}>
-                <h3>Teste</h3>
                 <p>Legenda: Assentos selecionados estão em roxo.</p>
                 <button
                     className={styles.submitButton}
