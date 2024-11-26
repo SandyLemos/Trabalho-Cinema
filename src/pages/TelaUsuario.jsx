@@ -1,13 +1,10 @@
-import Barra_menu from "../Componentes_para_telas/barra_menu";
-import styles from "./tela_usuario.module.css";
+import styles from "../styles/tela.usuario.module.css";
 import icone from "../assets/user.png";
-import classNames from 'classnames';
 
 function TelaUsuario()
 {
     return(
         <>
-            <Barra_menu/> 
             <div id={styles.principal}>
                 <div id={styles.cabecalho}>Minha Conta</div>
             </div>

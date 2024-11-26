@@ -1,94 +1,213 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-.centralizar
-{
-    width: 100%;
-    height: 100%;
+/* Container Principal */
+.containerPrincipal {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 7rem;
-
+    justify-content: flex-start;
+    width: 100%;
+    height: 100vh;
+    background-color: #1e1e2e;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    padding: 2rem;
 }
 
-#container
-{
-    width: 50%;
-    height: 33rem;
+/* Cabeçalho */
+.cabecalho {
+    width: 100%;
+    text-align: center;
+    background-color: #7d2ae8;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.cabecalho h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+/* Conteúdo Principal */
+.conteudo {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Sessão Container */
+.sessaoContainer {
+    flex: 1;
+    background-color: #313244;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sessaoContainer h2 {
+    margin-bottom: 1rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.campo label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.campo select {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
     background: #1e1e2e;
-    border-radius: 20px 20px 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: solid rgb(255, 230, 0);
-}
-
-#cabecalho{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-top: 1rem ;
-    padding-bottom: 1rem;
-    padding-left: 2rem;
     color: white;
-    border-bottom: solid rgb(255, 230, 0);
-    border-radius: 20px 20px 0 0;
 }
 
-#grid{
+/* Botões */
+.botao {
     width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    padding: 1rem;
+    background-color: #7d2ae8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botao:hover {
+    background-color: #6b23c9;
+}
+
+/* Ingressos Container */
+.ingressosContainer {
+    flex: 1;
+    background-color: #313244;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ingressosContainer h2 {
+    margin-bottom: 1rem;
+}
+
+/* Linha de Tipos de Ingresso */
+.ingressoLinha {
+    display: flex;
     align-items: center;
-    justify-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
-.elementos_grid{
+/* Contêiner para Tipo e Preço de Ingresso */
+.inputContainer {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+    min-width: 250px;
+    /* Garante que os campos de tipo e preço fiquem no mesmo tamanho */
+    max-width: 500px;
+    /* Limita a largura para não ficar muito largo */
+    justify-content: space-between;
+}
+
+/* Campos de entrada para Tipo e Preço */
+.input {
+    position: relative;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    /* Borda mais arredondada */
+    background: #2a2e38;
+    color: white;
+    flex: 1;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    /* Transição suave para efeito de foco */
+}
+
+.inputx {
+    position: relative;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    height: 50px;
+    background: #2a2e38;
+    color: white;
+    flex: 1;
+    width: 20px;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    /* Transição suave para efeito de foco */
+}
+
+/* Estilo de foco dos inputs */
+.input:focus {
+    outline: none;
+    border-color: #7d2ae8;
+    background-color: #1e1e2e;
+    box-shadow: 0 0 0 2px #7d2ae8;
+}
+
+/* Botões de Adicionar e Remover */
+.botaoAdicionar,
+.botaoRemover {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.botaoAdicionar {
+    background-color: #38a169;
+}
+
+.botaoAdicionar:hover {
+    background-color: #2f855a;
+}
+
+.botaoRemover {
+    background-color: #e53e3e;
+}
+
+.botaoRemover:hover {
+    background-color: #c53030;
+}
+
+/* Sugestões */
+.sugestoes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
 }
 
-#criacao
-{
-    padding-top: 1rem;
-    padding-left: 2rem;
-    border-right: solid yellow;
-    color: white;
-    
+.sugestaoItem {
+    padding: 8px;
+    cursor: pointer;
 }
 
-.campo
-{
-    color: white;
-    width: 70%;
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-select
-{
-    border-radius: 3rem;
-    height: 1.3rem;
-}
-
-.botao
-{
-  width: 60% ;
-  height: 2.5rem;
-  position: relative;
-  padding: 10px 22px;
-  border-radius: 20px;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  background-color: #7d2ae8;
-  transition: all 0.2s ease;
-  font-family: 'Poppins', sans-serif;
+.sugestaoItem:hover {
+    background-color: #ddd;
 }
