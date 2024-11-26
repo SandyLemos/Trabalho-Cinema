@@ -13,6 +13,16 @@ body {
     line-height: 1.6;
 }
 
+body.tema1
+{
+    background:  #FFD700;
+}
+
+body.tema2
+{
+    background-color: black;
+}
+
 ol, ul {
     list-style: none;
 }
