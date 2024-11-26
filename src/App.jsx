@@ -11,31 +11,26 @@ import ListarSalas from "./pages/Salas/ListarSalas.jsx";
 import EditarSala from "./pages/Salas/EditarSala.jsx";
 import TelaFilme from "./pages/TelaFilme.jsx";
 import Programacao from "./pages/Programacao.jsx";
-import CompraIngressos from './pages/CompraIngressos.jsx';
-import { AssentoProvider } from './contexts/AssentoContext.jsx';
 
 const App = () => {
     return (
-        <AssentoProvider>
-            <Router>
-                <Routes>
-                    <Route element={<LayoutWithMenu />}>
-                        <Route path="/" element={<TelaPrincipal />} />
-                        <Route path="/compra-ingresso" element={<CompraIngressos />} />
-                        <Route path="/programacao" element={<Programacao />} />
-                        <Route path="/search" element={<Search />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/criar-sala" element={<CriarSala />} />
-                        <Route path="/listar-salas" element={<ListarSalas />} />
-                        <Route path="/editar-sala/:id_sala" element={<EditarSala />} />
-                        <Route path="/filme/:id/:slug" element={<TelaFilme />} />
-                    </Route>
-                    <Route path="/entrar" element={<Entrar />} />
-                    <Route path="/registrar" element={<Registrar />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </Router>
-        </AssentoProvider>
+        <Router>
+            <Routes>
+                <Route element={<LayoutWithMenu />}>
+                    <Route path="/" element={<TelaPrincipal />} />
+                    <Route path="/programacao" element={<Programacao />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/criar-sala" element={<CriarSala />} />
+                    <Route path="/listar-salas" element={<ListarSalas />} />
+                    <Route path="/editar-sala/:id_sala" element={<EditarSala />} />
+                    <Route path="/filme/:id/:slug" element={<TelaFilme />} />
+                </Route>
+                <Route path="/entrar" element={<Entrar />} />
+                <Route path="/registrar" element={<Registrar />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </Router>
     );
 };
 
