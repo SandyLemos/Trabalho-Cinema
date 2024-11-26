@@ -16,6 +16,8 @@ import {AssentoProvider} from "./contexts/AssentoContext.jsx";
 import CompraIngressos from "./pages/CompraIngressos.jsx";
 import {useEffect} from "react";
 import TelaUsuario from './pages/TelaUsuario.jsx';
+import CriarGenero from './pages/Generos/CriarGenero.jsx';
+import ListarGeneros from './pages/Generos/ListarGenero.jsx';
 
 const App = () => {
     return (
@@ -49,6 +51,8 @@ const App = () => {
                         <Route path="/search" element={<Search />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/criar-sessao" element={<CriarSessao/>}/>
+                        <Route path="/criar-genero" element={<CriarGenero/>}/>
+                        <Route path="/listar-generos" element={<ListarGeneros/>}/>
                         <Route path="/criar-sala" element={<CriarSala />} />
                         <Route path="/listar-salas" element={<ListarSalas />} />
                         <Route path="/editar-sala/:id_sala" element={<EditarSala />} />

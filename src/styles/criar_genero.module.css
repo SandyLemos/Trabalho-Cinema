@@ -1,0 +1,126 @@
+.criarGeneroContainer {
+    padding: 20px;
+    max-width: 500px;
+    margin: 5rem auto;
+    background-color: #1e1e2f;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    animation: fadeIn 0.5s ease-in;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.cabecalho h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.conteudo {
+    width: 100%;
+}
+
+.generoContainer {
+    padding: 20px;
+    background-color: #2c2c3e;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+}
+
+.campo {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.input {
+    position: relative;
+    width: 80%;
+    padding: 12px;
+    background-color: #3e3e52;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #ffffff;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.input:focus {
+    background-color: #4a4a64;
+    outline: none;
+}
+
+.botao {
+    width: 80%;
+    padding: 12px;
+    background-color: #7d2ae8;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+    margin-top: 20px;
+    box-shadow: 0 3px 10px rgba(125, 42, 232, 0.4);
+    text-align: center;
+}
+
+.botao:disabled {
+    background-color: #999999;
+}
+
+.botao:hover {
+    background-color: #6b23c9;
+    transform: scale(1.05);
+}
+
+.erro {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.inputx {
+    width: 80%;
+    padding: 10px;
+    background-color: #3e3e52;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #ffffff;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.inputx:focus {
+    background-color: #4a4a64;
+    outline: none;
+}
