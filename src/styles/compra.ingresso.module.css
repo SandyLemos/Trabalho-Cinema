@@ -1,0 +1,96 @@
+/* Estilo principal */
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+}
+
+.rightSection {
+    width: 60%;
+    background-color: #1e1e2e;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+.leftSection {
+    width: 35%;
+    background-color: #313244;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.sessionDetails {
+    margin-bottom: 20px;
+}
+
+.sessionDetails h2 {
+    font-size: 1.5rem;
+}
+
+.totalPrice {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.confirmButton {
+    width: 100%;
+    background-color: #7d2ae8;
+    color: white;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+.confirmButton:hover {
+    background-color: #6b23c9;
+}
+
+.ticketType {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.ticketCount {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.incrementButton,
+.decrementButton {
+    width: 30px;
+    height: 30px;
+    background-color: #7d2ae8;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.incrementButton:hover,
+.decrementButton:hover {
+    background-color: #6b23c9;
+}
+
+.ticketCount p {
+    font-size: 1rem;
+    margin: 0;
+}

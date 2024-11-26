@@ -10,7 +10,7 @@ import { setAuthToken } from "../../utils/api.js";
 function BarraMenu() {
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [setError] = useState('');
     const { isAuthenticated, role, loading: authLoading, error: authError } = useAuthCheck();
     const navigate = useNavigate();
 
@@ -142,7 +142,7 @@ function BarraMenu() {
             <div className={styles.p_botao}>
                 <button className={styles.botao} onClick={() => navigate('/')}> Menu </button>
                 <button className={styles.botao}> Filmes </button>
-                <button className={styles.botao}> Programação </button>
+                <button className={styles.botao} onClick={() => navigate('/programacao')}> Programação </button>
             </div>
 
             <div className={styles.p_botao2}>

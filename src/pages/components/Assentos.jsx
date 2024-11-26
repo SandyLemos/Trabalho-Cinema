@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import styles from '../../styles/cadeiras.disponiveis.module.css';
 import SessaoService from "../../services/SessaoService.js";
-import SalaService from "../../services/SalaService.js";  // Repositório para obter dados da sessão
+import SalaService from "../../services/SalaService.js";  
+import { useAssentoContext } from '../../contexts/AssentoContext';
+import { useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 function Assentos({ id_sessao }) {
-    const [selectedSeats, setSelectedSeats] = useState([]);
+    const { selectedSeats, setSelectedSeats } = useAssentoContext();
     const [reservedSeats, setReservedSeats] = useState([]);
     const [salaName, setSalaName] = useState('');
     const [existingSeats, setExistingSeats] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const seatRows = 10; // Número total de linhas
     const seatColumns = 10; // Número total de colunas
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRoomAndSessionData = async () => {
@@ -82,6 +85,14 @@ function Assentos({ id_sessao }) {
         });
     };
 
+        const handleSaveReservation = () => {
+        if (selectedSeats.length > 0) {
+            navigate('/compra-ingresso');
+        } else {
+            alert('Selecione ao menos um assento');
+        }
+    };
+
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>{salaName}</h1>
@@ -102,6 +113,7 @@ function Assentos({ id_sessao }) {
                 <button
                     className={styles.submitButton}
                     disabled={loading}
+                    onClick={handleSaveReservation}
                 >
                     {loading ? 'Salvando...' : 'Salvar Reserva'}
                 </button>
@@ -111,4 +123,3 @@ function Assentos({ id_sessao }) {
 }
 
 export default Assentos;
-
