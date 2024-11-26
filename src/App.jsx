@@ -10,6 +10,7 @@ import CriarSala from "./pages/Salas/CriarSala.jsx";
 import ListarSalas from "./pages/Salas/ListarSalas.jsx";
 import EditarSala from "./pages/Salas/EditarSala.jsx";
 import TelaFilme from "./pages/TelaFilme.jsx";
+import Programacao from "./pages/Programacao.jsx";
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
             <Routes>
                 <Route element={<LayoutWithMenu />}>
                     <Route path="/" element={<TelaPrincipal />} />
+                    <Route path="/programacao" element={<Programacao />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/criar-sala" element={<CriarSala />} />
