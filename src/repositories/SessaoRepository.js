@@ -1,6 +1,20 @@
 import {api} from "../utils/api.js";
 
 class SessaoRepository {
+    async getAllSessions() {
+        try {
+            const response = await api.get('/sessions');
+
+            if (response.data.success) {
+                return response.data.session;
+            } else {
+                throw new Error("Formato de resposta inesperado");
+            }
+        } catch (e) {
+            console.error("Erro ao buscar sessões:", e);
+            throw e;
+        }
+    }
 
     async getSessionByMonth() {
         try {

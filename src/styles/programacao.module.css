@@ -1,39 +1,27 @@
-/* Estilos para o header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #333;
-  color: rgb(255, 251, 0);
-}
+/* Estilos principais */
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.versionExperienceSelector select {
-  margin: 0 10px;
-  padding: 8px;
-  font-size: 14px;
-}
-
-/* Estilos para o carrossel de datas */
 .dateCarousel {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+  color: #ffffff;
 }
 
 .dateCarousel button {
-  padding: 10px;
+  padding: 10px 20px;
   font-size: 16px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: #7d2ae8;
+  border: none;
+  border-radius: 8px;
+  color: white;
   cursor: pointer;
   margin: 0 10px;
+  transition: background-color 0.3s;
+}
+
+.dateCarousel button:hover {
+  background-color: #6b23c9;
 }
 
 .dateCarousel span {
@@ -41,79 +29,35 @@
   font-weight: bold;
 }
 
-/* Estilos para os filmes */
-.filmeCard {
-  background-color: #f9f9f9;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.filmeCard h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.filmeCard p {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.horarios {
-  display: flex;
-  gap: 10px;
-}
-
-.buyButton {
-  padding: 8px 12px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.buyButton:hover {
-  background-color: #218838;
-}
-
-/* Estilos para o rodapé */
-.footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #333;
-  color: white;
-}
-
-.socialLinks a {
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
-}
-
-.socialLinks a:hover {
-  text-decoration: underline;
-}
-
+/* Carrossel de Datas */
 .carrosselDeDatas {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
   overflow-x: auto;
-  color: rgba(122, 12, 122, 0.904);
+  color: #ffffff;
   padding: 10px 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+
 }
 
 .itemData {
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  background-color: #313244;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 10px;
+  max-width: 8rem;
 }
 
 .itemData:hover {
-  background-color: #f0f0f0;
+  background-color: #7d2ae8;
+  transform: scale(1.1);
 }
 
 .dia {
@@ -130,4 +74,109 @@
   margin-top: 20px;
   font-size: 18px;
   font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Filmes */
+.filmeCard {
+  background-color: #1e1e2e;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  margin: 4rem auto 20px;
+  width: 80%;
+}
+
+.filmeCard h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.filmeCard p {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #b0b0b0;
+}
+
+.horarios {
+  display: flex;
+  gap: 10px;
+}
+
+.buyButton {
+  padding: 8px 16px;
+  background-color: #7d2ae8;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buyButton:hover {
+  background-color: #6b23c9;
+}
+
+/* Rodapé */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  background-color: #1e1e2e;
+  color: #ffffff;
+  border-radius: 15px;
+  margin: 0;
+
+
+}
+
+.footer .button {
+  padding: 12px 20px;
+  background-color: #7d2ae8;
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 10rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer .button:hover {
+  background-color: #6b23c9;
+}
+
+.socialLinks a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.socialLinks a:hover {
+  color: #7d2ae8;
+}
+
+.disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.selected {
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 10px;
+  color: black;
 }

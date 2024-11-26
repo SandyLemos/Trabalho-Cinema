@@ -1,130 +1,207 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles/programacao.module.css";
+import SessaoService from "../services/SessaoService";
+import { useNavigate } from "react-router-dom";
 
 const Programacao = () => {
-  const [selectedVersion, setSelectedVersion] = useState("Dublado");
-  const [selectedExperience, setSelectedExperience] = useState("Digital");
-  const [selectedDate, setSelectedDate] = useState("2024-11-25");
-  const [dataSelecionada, setDataSelecionada] = useState("nov. 25");
+  const [sessions, setSessions] = useState([]);
+  const [datesWithSessions, setDatesWithSessions] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
+  const navigate = useNavigate();
 
-  const diasDaSemana = ["seg.", "ter.", "qua.", "qui.", "sex.", "sáb.", "dom."];
+  // Função para carregar as sessões ao montar o componente
+  useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        const fetchedSessions = await SessaoService.getAllSessions();
+        setSessions(fetchedSessions);
 
-  const datas = [
-    { dia: "seg.", num: 25, mes: "nov." },
-    { dia: "ter.", num: 26, mes: "nov." },
-    { dia: "qua.", num: 27, mes: "nov." },
-    { dia: "qui.", num: 28, mes: "nov." },
-    { dia: "sex.", num: 29, mes: "nov." },
-    { dia: "sáb.", num: 30, mes: "nov." },
-    { dia: "dom.", num: 1, mes: "dez." },
-    { dia: "seg.", num: 2, mes: "dez." },
-    { dia: "ter.", num: 3, mes: "dez." },
-    { dia: "qua.", num: 4, mes: "dez." },
-  ];
+        // Extrai as datas disponíveis com sessões (YYYY-MM-DD)
+        const uniqueDates = [
+          ...new Set(
+              fetchedSessions.map((sessao) => {
+                return new Date(sessao.data_sessao).toISOString().split("T")[0];
+              })
+          ),
+        ];
+        setDatesWithSessions(uniqueDates);
 
-  const filmes = [
-    {
-      titulo: "Filme A",
-      descricao: "Descrição do Filme A",
-      horarios: ["14:00", "16:30", "19:00"],
-    },
-    {
-      titulo: "Filme B",
-      descricao: "Descrição do Filme B",
-      horarios: ["15:00", "18:00", "20:30"],
-    },
-  ];
+        // Seleciona o primeiro dia com sessões como padrão
+        setSelectedDate(uniqueDates[0] || "");
+      } catch (error) {
+        console.error("Erro ao carregar sessões:", error);
+      }
+    };
 
-  const dates = ["2024-11-25", "2024-11-26", "2024-11-27", "2024-11-28"];
+    fetchSessions();
+  }, []);
 
-  const handlePrevDate = () => {
-    const currentIndex = dates.indexOf(selectedDate);
-    if (currentIndex > 0) setSelectedDate(dates[currentIndex - 1]);
+  // Funções para navegar entre os meses com sessões
+  const handlePrevMonth = () => {
+    const currentMonth = new Date(selectedDate).getMonth(); // Pega o mês atual
+    const prevMonthDate = new Date(selectedDate);
+    prevMonthDate.setMonth(currentMonth - 1); // Muda para o mês anterior
+
+    const prevMonthString = prevMonthDate.toISOString().slice(0, 7); // Formata como YYYY-MM
+
+    // Encontre o primeiro dia disponível no mês anterior
+    const prevMonthAvailableDate = datesWithSessions.find((date) =>
+        date.startsWith(prevMonthString)
+    );
+    if (prevMonthAvailableDate) {
+      setSelectedDate(prevMonthAvailableDate);
+    }
   };
 
-  const handleNextDate = () => {
-    const currentIndex = dates.indexOf(selectedDate);
-    if (currentIndex < dates.length - 1) setSelectedDate(dates[currentIndex + 1]);
+  const handleNextMonth = () => {
+    const currentMonth = new Date(selectedDate).getMonth(); // Pega o mês atual
+    const nextMonthDate = new Date(selectedDate);
+    nextMonthDate.setMonth(currentMonth + 1); // Muda para o mês seguinte
+
+    const nextMonthString = nextMonthDate.toISOString().slice(0, 7); // Formata como YYYY-MM
+
+    // Encontre o primeiro dia disponível no mês seguinte
+    const nextMonthAvailableDate = datesWithSessions.find((date) =>
+        date.startsWith(nextMonthString)
+    );
+    if (nextMonthAvailableDate) {
+      setSelectedDate(nextMonthAvailableDate);
+    }
+  };
+
+  // Função para verificar se há filmes no próximo mês
+  const isNextMonthAvailable = () => {
+    const currentMonth = selectedDate.slice(0, 7); // Pega apenas o ano e mês no formato YYYY-MM
+    const nextMonth = new Date(currentMonth + "-01");
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    const nextMonthString = nextMonth.toISOString().slice(0, 7);
+    return datesWithSessions.some((date) => date.startsWith(nextMonthString));
+  };
+
+  // Função para verificar se a data já passou (para desabilitar botões de sessão passados)
+  const isSessionPassed = (date, time) => {
+    const sessionDate = new Date(date);
+    const [hour, minute] = time.split(":").map(Number);
+    sessionDate.setHours(hour, minute, 0, 0); // Ajusta para o horário da sessão
+
+    return sessionDate < new Date(); // Se o horário da sessão já passou
+  };
+
+  // Agrupar sessões por filme e horário, considerando a data selecionada
+  const groupedSessions = sessions.reduce((acc, session) => {
+    const sessionDate = new Date(session.data_sessao)
+        .toISOString()
+        .split("T")[0]; // YYYY-MM-DD
+    if (sessionDate === selectedDate) {
+      const filmId = session.filme.id;
+      if (!acc[filmId]) {
+        acc[filmId] = {
+          filme: session.filme,
+          horarios: [],
+        };
+      }
+      const horario = session.data_sessao
+          .toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+      acc[filmId].horarios.push(horario);
+    }
+    return acc;
+  }, {});
+
+  // Filtra as datas do mês selecionado
+  const getMonthDates = () => {
+    const selectedMonth = new Date(selectedDate).getMonth(); // Extrai o mês do selectedDate
+    return datesWithSessions.filter(
+        (date) => new Date(date).getMonth() === selectedMonth
+    );
+  };
+
+  const handleClickFilme = (id, slug) => {
+    navigate(`/filme/${id}/${slug}`); // Redireciona para a página do filme com base no slug
   };
 
   return (
-    <div>
-      {/* Topo da página */}
-      <div className={styles.header}>
-        <div className={styles.title}>Cinema Tech</div>
-        <div className={styles.versionExperienceSelector}>
-          <select
-            value={selectedVersion}
-            onChange={(e) => setSelectedVersion(e.target.value)}
+      <div>
+        {/* Carrossel de meses */}
+        <div className={styles.dateCarousel}>
+          <button onClick={handlePrevMonth} className={styles.button}>
+            Anterior
+          </button>
+          <span>
+          {selectedDate &&
+              new Date(selectedDate).toLocaleDateString("pt-BR", {
+                month: "long",
+                year: "numeric",
+              })}
+        </span>
+          <button
+              onClick={handleNextMonth}
+              className={styles.button}
+              disabled={!isNextMonthAvailable()}
           >
-            <option value="Dublado">Dublado</option>
-            <option value="Legendado">Legendado</option>
-          </select>
-          <select
-            value={selectedExperience}
-            onChange={(e) => setSelectedExperience(e.target.value)}
-          >
-            <option value="Digital">Digital</option>
-            <option value="3D">3D</option>
-          </select>
+            Próximo
+          </button>
         </div>
-      </div>
 
-      {/* Carrossel de datas */}
-      <div className={styles.dateCarousel}>
-        <button onClick={handlePrevDate} className={styles.button}>
-          Anterior
-        </button>
-        <span>{selectedDate}</span>
-        <button onClick={handleNextDate} className={styles.button}>
-          Próximo
-        </button>
-      </div>
+        {/* Carrossel de datas */}
+        <div className={styles.carrosselDeDatas}>
+          {getMonthDates().map((date) => (
+              <div
+                  key={date}
+                  className={`${styles.itemData} ${
+                      date === selectedDate ? styles.selected : ""
+                  }`}
+                  onClick={() => setSelectedDate(date)}
+              >
+                <div className={styles.data}>
+                  {new Date(date).toLocaleDateString("pt-BR", {
+                    day: "2-digit",
+                    month: "short",
+                  })}
+                </div>
+              </div>
+          ))}
+        </div>
 
-      <div className={styles.carrosselDeDatas}>
-        {datas.map((data, index) => (
-          <div
-            key={index}
-            className={styles.itemData}
-            onClick={() => setDataSelecionada(`${data.dia} ${data.num} ${data.mes}`)}
-          >
-            <div className={styles.dia}>{data.dia}</div>
-            <div className={styles.data}>
-              {data.num} {data.mes}
-            </div>
+        {/* Conteúdo principal */}
+        <div className={styles.content}>
+          {Object.values(groupedSessions).map(({ filme, horarios }) => (
+              <div key={filme.id} className={styles.filmeCard}>
+                <h3>{filme.titulo}</h3>
+                <p>{filme.sinopse}</p>
+
+                {/* Exibindo os horários da sessão */}
+                <div className={styles.horarios}>
+                  {horarios.length > 0 ? (
+                      horarios.map((horario, idx) => {
+                        const disabled = isSessionPassed(selectedDate, horario);
+                        return (
+                            <button
+                                key={idx}
+                                className={`${styles.buyButton} ${disabled ? styles.disabled : ""}`}
+                                disabled={disabled}
+                                onClick={() => !disabled && handleClickFilme(filme.id, filme.slug)}
+                            >
+                              {horario} - Comprar
+                            </button>
+                        );
+                      })
+                  ) : (
+                      <p>Sem horários disponíveis para este dia.</p>
+                  )}
+                </div>
+              </div>
+          ))}
+        </div>
+
+        {/* Rodapé */}
+        <div className={styles.footer}>
+          <div className={styles.button}>Voltar ao topo</div>
+          <div className={styles.socialLinks}>
+            <a href="#facebook">Facebook</a> | <a href="#twitter">Twitter</a>
           </div>
-        ))}
-        <div className={styles.dataSelecionada}>
-          <h3>Data Selecionada: {dataSelecionada}</h3>
+          <div>© 2024 Cinema Tech</div>
         </div>
       </div>
-
-      {/* Conteúdo principal */}
-      <div className={styles.content}>
-        {filmes.map((filme, index) => (
-          <div key={index} className={styles.filmeCard}>
-            <h3>{filme.titulo}</h3>
-            <p>{filme.descricao}</p>
-            <div className={styles.horarios}>
-              {filme.horarios.map((horario, idx) => (
-                <button key={idx} className={styles.buyButton}>
-                  {horario} - Comprar
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Final da página */}
-      <div className={styles.footer}>
-        <div className={styles.button}>Voltar ao topo</div>
-        <div className={styles.socialLinks}>
-          <a href="#facebook">Facebook</a> | <a href="#twitter">Twitter</a>
-        </div>
-        <div>© 2024 Cinema Tech</div>
-      </div>
-    </div>
   );
 };
 

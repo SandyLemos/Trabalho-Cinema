@@ -1,6 +1,58 @@
 import SessaoRepository from "../repositories/SessaoRepository.js";
 
 class SessaoService {
+    async getAllSessions() {
+        try {
+            // Chama o repositório para obter todas as sessões
+            const sessions = await SessaoRepository.getAllSessions();
+
+            // Mapeia as sessões para um formato estruturado
+            const mappedSessions = this.mapAllSessions(sessions);
+
+            return mappedSessions;
+        } catch (e) {
+            console.error("Erro ao buscar todas as sessões:", e);
+            throw e;
+        }
+    }
+
+    mapAllSessions(sessions) {
+        return sessions.map((session) => ({
+            id_sessao: session.id_sessao,
+            data_sessao: new Date(session.data_sessao),
+            filme: this.mapFilmDetails(session.filme),
+            sala: this.mapRoomDetails(session.sala),
+        }));
+    }
+
+
+    mapFilmDetails(filme) {
+        return {
+            id: filme.id_filme,
+            titulo: filme.titulo,
+            slug: filme.slug,
+            sinopse: filme.sinopse,
+            data_lancamento: new Date(filme.data_lancamento),
+            duracao: this.formatDuration(filme.duracao),
+            classificacao_etaria: filme.classificacao_etaria,
+            poster: filme.poster_path,
+            nota_imdb: filme.nota_imdb,
+            trailer_url: filme.trailer_url,
+        };
+    }
+
+    mapRoomDetails(sala) {
+        return {
+            id: sala.id_tipo_sala,
+            nome: sala.nome_sala,
+            capacidade: sala.capacidade,
+        };
+    }
+
+
+    formatDuration(duration) {
+        return `${Math.floor(duration / 60)}h ${duration % 60}min`;
+    }
 
     async getSessionMonth() {
         try {
