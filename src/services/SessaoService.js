@@ -16,7 +16,7 @@ class SessaoService {
       throw e;
     }
   }
-  
+
   async getAllSessions() {
     try {
       // Chama o repositório para obter todas as sessões
@@ -233,6 +233,28 @@ class SessaoService {
     } catch (e) {
       console.error("Erro ao buscar sessão pelo ID:", e);
       throw e;
+    }
+  }
+
+  async getSesionsCreated() {
+    try {
+      const response = await SessaoRepository.getSessionByMonthX();
+      if (response.success) {
+        return response.films;
+      } else {
+        throw new Error("Formato de resposta inesperado");
+      }
+    } catch (e) {
+      console.error("Erro ao buscar sessões criadas:", e);
+      throw e;
+    }
+  }
+
+  async deleteSession(id) {
+    try {
+      return await SessaoRepository.deleteSession(id);
+    } catch (error) {
+      throw new Error(error.message || "Erro ao deletar a sessao");
     }
   }
 }

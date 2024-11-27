@@ -7,7 +7,7 @@ import styles from "../../styles/cadastrar.filmes.module.css";
 
 const CriarFilme = () => {
   const navigate = useNavigate();
-  const [generos, setGeneros] = useState([]); // Gêneros carregados, inicialmente um array vazio
+  const [generos, setGeneros] = useState([]);
   const [titulo, setTitulo] = useState("");
   const [sinopse, setSinopse] = useState("");
   const [dataLancamento, setDataLancamento] = useState("");
@@ -25,13 +25,9 @@ const CriarFilme = () => {
   // Carregar os gêneros da API
 const loadGeneros = async () => {
   try {
-    console.log("Carregando gêneros...");
     const response = await GenerosService.getAllGenres();
-    console.log("Resposta de gêneros:", response);
-    // Verifique se a resposta tem a estrutura esperada
     setGeneros(response?.genres || []);
   } catch (error) {
-    console.error("Erro ao carregar gêneros:", error);
     setError(`Erro desconhecido ao buscar os gêneros: ${error.message || error}`);
   }
 };

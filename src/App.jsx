@@ -20,6 +20,8 @@ import CriarGenero from './pages/Generos/CriarGenero.jsx';
 import ListarGeneros from './pages/Generos/ListarGenero.jsx';
 import ListarFilmes from './pages/FIlmes/ListarFilmes.jsx';
 import CriarFilme from './pages/FIlmes/CriarFilme.jsx';
+import EditarFilme from './pages/FIlmes/EditarFilme.jsx';
+import ListarSessoes from './pages/Sessao/ListarSessoes.jsx';
 
 const App = () => {
     return (
@@ -57,6 +59,8 @@ const App = () => {
                         <Route path="/listar-generos" element={<ListarGeneros/>}/>
                         <Route path="/criar-filme" element={<CriarFilme/>}/>
                         <Route path="/listar-filmes" element={<ListarFilmes/>}/>
+                        <Route path="/listar-sessoes" element={<ListarSessoes/>}/>
+                        <Route path="/editar-filme/:id_filme" element={<EditarFilme />} />
                         <Route path="/criar-sala" element={<CriarSala />} />
                         <Route path="/listar-salas" element={<ListarSalas />} />
                         <Route path="/editar-sala/:id_sala" element={<EditarSala />} />

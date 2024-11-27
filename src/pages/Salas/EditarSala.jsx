@@ -9,7 +9,7 @@ function EditarSala() {
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [salaName, setSalaName] = useState('');
     const [salaType, setSalaType] = useState('');
-    const [setAtivo] = useState(true);
+    const [ativo, setAtivo] = useState(true);
     const [loading, setLoading] = useState(false);
     const seatRows = 10;
     const seatColumns = 10;

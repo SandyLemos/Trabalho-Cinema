@@ -25,13 +25,13 @@ function AdminDashboard() {
             <div className={styles.movieActions}>
               <button
                 className={styles.actionButton}
-                onClick={() => alert("Listar Filmes")}
+                onClick={() => navigate("/listar-filmes")}
               >
                 <FaList className={styles.buttonIcon} /> Listar Filmes
               </button>
               <button
                 className={styles.actionButton}
-                onClick={() => alert("Criar Novo Filme")}
+                onClick={() => navigate("/criar-filme")}
               >
                 <FaPlus className={styles.buttonIcon} /> Criar Filme
               </button>
@@ -91,7 +91,7 @@ function AdminDashboard() {
             <div className={styles.movieActions}>
               <button
                 className={styles.actionButton}
-                onClick={() => navigate("/listar-salas")}
+                onClick={() => navigate("/listar-sessoes")}
               >
                 <FaList className={styles.buttonIcon} /> Todas as Sessoes
               </button>

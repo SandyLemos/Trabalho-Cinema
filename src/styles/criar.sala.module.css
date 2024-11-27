@@ -44,6 +44,10 @@
     color: #ffffff;
 }
 
+.inputField input {
+    color: black;
+}
+
 .inputField:focus {
     outline: none;
     border-color: #6b23c9;

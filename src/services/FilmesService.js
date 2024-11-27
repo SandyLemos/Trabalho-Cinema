@@ -21,7 +21,6 @@ class FilmesService {
     generos
   ) {
     try {
-
       const filme = {
         titulo,
         sinopse,
@@ -43,7 +42,7 @@ class FilmesService {
   }
 
   async getFilmByTitleAI(titulo) {
-    try { 
+    try {
       const movieName = titulo;
       const response = await FilmesRepository.getFilmeByTitleAI(movieName);
 
@@ -63,30 +62,43 @@ class FilmesService {
 
   async updateFilm(
     id,
-    titulo,
-    sinopse,
-    data_lancamento,
-    duracao,
-    classificacao_etaria,
-    poster_path,
-    backdrop_path,
-    nota_imdb,
-    generos
+    {
+      titulo,
+      sinopse,
+      data_lancamento,
+      duracao,
+      classificacao_etaria,
+      poster_path,
+      trailer_url,
+      nota_imdb,
+      generos,
+    }
   ) {
     try {
+      // Certifique-se de que os valores de duracao, classificacao_etaria e nota_imdb não sejam nulos ou indefinidos antes de enviar
       const filme = {
         titulo,
         sinopse,
         data_lancamento,
-        duracao: parseInt(duracao, 10),
-        classificacao_etaria: parseInt(classificacao_etaria, 10),
+        duracao:
+          duracao !== null && duracao !== undefined
+            ? parseInt(duracao, 10)
+            : null,
+        classificacao_etaria:
+          classificacao_etaria !== null && classificacao_etaria !== undefined
+            ? parseInt(classificacao_etaria, 10)
+            : null,
         poster_path,
-        backdrop_path,
-        nota_imdb: parseFloat(nota_imdb),
+        trailer_url,
+        nota_imdb:
+          nota_imdb !== null && nota_imdb !== undefined
+            ? parseFloat(nota_imdb)
+            : null,
         generos: generos.map((genero) => parseInt(genero, 10)),
       };
 
-      return await FilmesRepository.updateFilm(id, filme);
+      const response = await FilmesRepository.updateFilm(id, filme);
+      return response;
     } catch (error) {
       throw new Error(error.message || "Erro ao atualizar filme");
     }

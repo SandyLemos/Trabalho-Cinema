@@ -46,7 +46,7 @@ class FilmesRepository {
   async getFilmById(id) {
     try {
       const response = await api.get(`/films/${id}`);
-      return this.handleFilmResponse(response);
+      return response.data;
     } catch (error) {
       throw this.handleError(error, "Erro desconhecido ao buscar filme");
     }
@@ -56,7 +56,6 @@ class FilmesRepository {
     try {
       const token = localStorage.getItem("token");
       const response = await api.post("/films", filme, {
-        // Aqui passa o 'filme' como corpo
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -68,12 +67,36 @@ class FilmesRepository {
     }
   }
 
-  async updateFilm(id, filmData) {
+  async updateFilm(
+    id,
+    titulo,
+    sinopse,
+    data_lancamento,
+    duracao,
+    classificacao_etaria,
+    poster_path,
+    trailer_url,
+    nota_imdb) {
     try {
-      const response = await api.put(`/films/${id}`, filmData, {
-        withCredentials: true,
-      });
-      return this.handleResponse(response, "Erro ao atualizar o filme");
+      const token = localStorage.getItem("token");
+      const response = await api.put(
+        `/films/${id}`,
+        titulo,
+        sinopse,
+        data_lancamento,
+        duracao,
+        classificacao_etaria,
+        poster_path,
+        trailer_url,
+        nota_imdb,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
     } catch (error) {
       throw this.handleError(error, "Erro desconhecido ao atualizar filme");
     }
@@ -81,8 +104,12 @@ class FilmesRepository {
 
   async deleteFilm(id) {
     try {
+      const token = localStorage.getItem("token");
       const response = await api.delete(`/films/${id}`, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
       return this.handleResponse(response, "Erro ao deletar o filme");
     } catch (error) {
