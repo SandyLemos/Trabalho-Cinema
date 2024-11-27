@@ -1,94 +1,80 @@
-#principal{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5rem;
-    width: 100%;
+/* Estilos gerais para a página */
+.container {
+    padding: 20px;
+    background-color: #1e1e2f;
+    /* Fundo escuro */
+    color: #ffffff;
+    /* Texto branco */
+    border-radius: 15px;
+    max-width: 1200px;
+    margin: 2rem auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-#cabecalho{
-    display: flex;
-    flex-direction: row;
-    color: white;
-    border-bottom: solid gray;
-    width: 20rem;
-    justify-content: center;
-    font-size: 25px;
-    border-width: 1px;
-    margin-bottom: 2rem;
+.title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-#perfil_usu
-{
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(4,auto);
-    column-gap: 3rem;
-    place-items: center;
-    place-content: center;
-    width: 40%;
-    margin: auto; /*De alguma forma e centraliza a div na tela*/
+.reservationList {
+    margin-top: 20px;
 }
 
-#icone
-{
-    width: 15rem;
-    height: 15rem;
+.noReservations {
+    text-align: center;
+    font-size: 18px;
+    color: #bbb;
 }
 
-#info
-{
-    width: 32rem;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 25% 25% 25% 25%;
-    gap: 15px;
-    grid-template-areas: 
-    "nome nome"
-    "cpf data_nasc"
-    "telefone email"
-    "estado cidade";
+/* Estilos para cada item de reserva */
+.reservationItem {
+    background-color: #2f2f3d;
+    /* Cor de fundo clara para cada item */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.campos
-{
-    margin-bottom: 5px ; 
-    border-radius: 5px;
-    box-sizing: border-box;
-    width: auto;
-    height: 2rem;
-    padding-left: 5px;
+.reservationTitle {
+    font-size: 20px;
+    color: #7d2ae8;
+    /* Cor roxa para destacar o título */
 }
 
-#nome
-{
-    grid-area: nome;
-    height: 2rem;
-    width: 100%
+.status {
+    color: #ff9800;
+    /* Cor amarela para status (pendente, por exemplo) */
+    font-weight: bold;
 }
 
-#cpf
-{
-    grid-area: cpf;
+.seatInfo {
+    font-size: 14px;
+    color: #c7c7c7;
+    /* Cor do texto das cadeiras */
+    margin: 5px 0;
 }
 
-#data_nc
-{
-    grid-area: data_nasc;
+.seatInfo strong {
+    color: #7d2ae8;
+    /* Cor do tipo de ingresso */
 }
 
-#telefone
-{
-    grid-area: telefone;
+/* Estilos para o carregamento e erro */
+.loading,
+.error {
+    font-size: 18px;
+    text-align: center;
+    color: #ff5722;
+    /* Cor alaranjada para mensagens de erro ou carregamento */
+    margin-top: 20px;
 }
 
-#email
-{
-    grid-area: email;
-}
-
-#estado
-{
-    grid-area: estado;
+/* Melhora a aparência de uma lista sem reservas */
+.noReservations {
+    font-size: 18px;
+    color: #888;
+    text-align: center;
 }

@@ -9,6 +9,14 @@ class IngressoService {
     }
   }
 
+  async getAllTickePrice() {
+    try {
+      return await IngressoRepository.getTicketPrice();
+    } catch (error) {
+      throw new Error(error.message || "Erro ao buscar o tipo de ingresso");
+    }
+  }
+
   async createTickerPrice(id_sessao, id_tipo, preco) {
     try {
       const session = await IngressoRepository.createTicketPrice(

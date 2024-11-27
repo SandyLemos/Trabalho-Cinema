@@ -1,61 +1,81 @@
-import styles from "../styles/tela.usuario.module.css";
-import icone from "../assets/user.png";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import styles from '../styles/tela.usuario.module.css'; // Importe o arquivo CSS
 
-function TelaUsuario()
-{
-    return(
-        <>
-            <div id={styles.principal}>
-                <div id={styles.cabecalho}>Minha Conta</div>
-            </div>
-            <div id={styles.perfil_usu}>
+const UserReservations = () => {
+  const [reservations, setReservations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Função para buscar as reservas do usuário
+  const fetchReservations = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Adapte para seu mecanismo de autenticação
+      const response = await axios.get(
+        'https://roasted-haley-cinema-tech-02703ea5.koyeb.app/v1/bookings/user/all-my-user',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Certifique-se de enviar o token se necessário
+          },
+        }
+      );
+
+      if (response.data.success) {
+        setReservations(response.data.bookings);
+      } else {
+        setError('Erro ao carregar as reservas');
+      }
+    } catch (error) {
+      setError('Erro ao buscar as reservas. Tente novamente.');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReservations();
+  }, []); // Chama a função assim que o componente for montado
+
+  if (loading) {
+    return <div className={styles.loading}>Carregando suas reservas...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.error}>{error}</div>;
+  }
+
+  return (
+    <div className={styles.container}>
+      <h2 className={styles.title}>Minhas Reservas</h2>
+      <div className={styles.reservationList}>
+        {reservations.length === 0 ? (
+          <p className={styles.noReservations}>Você não tem reservas feitas.</p>
+        ) : (
+          <ul>
+            {reservations.map((reservation) => (
+              <li key={reservation.id_reserva} className={styles.reservationItem}>
+                <h3 className={styles.reservationTitle}>Reserva #{reservation.id_reserva}</h3>
+                <p><strong>Sessão:</strong> {reservation.id_sessao}</p>
+                <p><strong>Status:</strong> <span className={styles.status}>{reservation.status}</span></p>
+                <p><strong>Total:</strong> R$ {parseFloat(reservation.total).toFixed(2)}</p>
                 <div>
-                    <img src={icone} alt="" id={styles.icone}/>
+                  <strong>Cadeiras:</strong>
+                  <ul>
+                    {reservation.cadeiras.map((cadeira, index) => (
+                      <li key={index} className={styles.seatInfo}>
+                        Linha {cadeira.linha} - Número {cadeira.numero} ({cadeira.tipo_ingresso})
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div id={styles.info}>
-                    <input type="text" id={styles.nome} className={styles.campos} placeholder="Nome Completo:" />
-                    <input type="text" id={styles.cpf} className={styles.campos} placeholder="CPF:"/>
-                    <input type="date" id={styles.data_nc} className={styles.campos} />
-                    <input type="text" id={styles.telefone} className={styles.campos} placeholder="Telefone:" />
-                    <input type="text" id={styles.email} className={styles.campos} placeholder="Email:"/>
-                    <select id={styles.estado} className={styles.campos}>
-                        <option value="">Selecione seu estado</option>
-                        <option value="AC">Acre (AC)</option>
-                        <option value="AL">Alagoas (AL)</option>
-                        <option value="AP">Amapá (AP)</option>
-                        <option value="AM">Amazonas (AM)</option>
-                        <option value="BA">Bahia (BA)</option>
-                        <option value="CE">Ceará (CE)</option>
-                        <option value="DF">Distrito Federal (DF)</option>
-                        <option value="ES">Espírito Santo (ES)</option>
-                        <option value="GO">Goiás (GO)</option>
-                        <option value="MA">Maranhão (MA)</option>
-                        <option value="MT">Mato Grosso (MT)</option>
-                        <option value="MS">Mato Grosso do Sul (MS)</option>
-                        <option value="MG">Minas Gerais (MG)</option>
-                        <option value="PA">Pará (PA)</option>
-                        <option value="PB">Paraíba (PB)</option>
-                        <option value="PR">Paraná (PR)</option>
-                        <option value="PE">Pernambuco (PE)</option>
-                        <option value="PI">Piauí (PI)</option>
-                        <option value="RJ">Rio de Janeiro (RJ)</option>
-                        <option value="RN">Rio Grande do Norte (RN)</option>
-                        <option value="RS">Rio Grande do Sul (RS)</option>
-                        <option value="RO">Rondônia (RO)</option>
-                        <option value="RR">Roraima (RR)</option>
-                        <option value="SC">Santa Catarina (SC)</option>
-                        <option value="SP">São Paulo (SP)</option>
-                        <option value="SE">Sergipe (SE)</option>
-                        <option value="TO">Tocantins (TO)</option>
-                    </select>
-                <input type="text" id={styles.cidade} className={styles.campos} placeholder="Cidade:" />
-            
-            <button></button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};
 
-                </div>
-            </div>
-        </>
-    );
-}
-
-export default TelaUsuario;
+export default UserReservations;
