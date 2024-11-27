@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import SalaService from '../../services/SalaService.js'; // Supondo que você tenha esse repositório configurado para obter os dados das salas
+import SalaService from '../../services/SalaService.js'; 
 import styles from "../../styles/listar.salas.module.css";
-import {useNavigate} from "react-router-dom"; // Importando o módulo CSS
+import {useNavigate} from "react-router-dom";
 
-const RoomList = () => {
+const ListarSalas = () => {
     const [rooms, setRooms] = useState([]);
     const navigate = useNavigate();
 
     // Função para carregar as salas
     const loadRooms = async () => {
         try {
-            const roomList = await SalaService.getRooms(); // Supondo que haja um método getRooms() que retorna todas as salas
+            const roomList = await SalaService.getRooms(); 
             setRooms(roomList);
         } catch (error) {
             console.error("Erro ao carregar salas:", error);
@@ -34,7 +34,6 @@ const RoomList = () => {
             console.log("Deletando sala com ID:", id);
             SalaService.deleteRoom(id)
                 .then(() => {
-                    // Caso a exclusão seja bem-sucedida, atualize o estado
                     setRooms(rooms.filter(room => room.id_sala !== id));
                     alert("Sala deletada com sucesso!");
                 })
@@ -71,4 +70,4 @@ const RoomList = () => {
     );
 };
 
-export default RoomList;
+export default ListarSalas;

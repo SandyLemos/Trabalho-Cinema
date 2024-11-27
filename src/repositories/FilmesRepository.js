@@ -21,6 +21,28 @@ class FilmesRepository {
     }
   }
 
+  async getFilmeByTitleAI(movieName) {
+    try {
+      const sanitizedMovieName = movieName
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      const token = localStorage.getItem("token");
+      const response = await api.post(
+        `/films-ai`,
+        { movieName: sanitizedMovieName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error, "Erro desconhecido ao buscar filmes");
+    }
+  }
+
   async getFilmById(id) {
     try {
       const response = await api.get(`/films/${id}`);
@@ -30,10 +52,15 @@ class FilmesRepository {
     }
   }
 
-  async createFilm(filmData) {
+  async createFilm(filme) {
     try {
-      const response = await api.post("/films", filmData, {
-        withCredentials: true,
+      const token = localStorage.getItem("token");
+      const response = await api.post("/films", filme, {
+        // Aqui passa o 'filme' como corpo
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
       return this.handleResponse(response, "Erro ao criar o filme");
     } catch (error) {

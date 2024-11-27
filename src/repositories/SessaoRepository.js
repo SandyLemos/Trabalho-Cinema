@@ -17,7 +17,7 @@ class SessaoRepository {
       );
 
       if (response.data.success) {
-        return response.data.sessionData; // Retorna a sessão criada
+        return response.data.sessionData;
       } else {
         throw new Error("Formato de resposta inesperado");
       }

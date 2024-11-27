@@ -17,10 +17,8 @@ class GenerosRepository {
 
   async getAllGenres() {
     try {
-      const response = await api.get("/genres", {
-        withCredentials: true,
-      });
-      return this.handleResponse(response, "Erro ao buscar os gêneros", "data");
+      const response = await api.get("/genres");
+      return response.data;
     } catch (error) {
       throw this.handleError(error, "Erro desconhecido ao buscar os gêneros");
     }

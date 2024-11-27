@@ -9,57 +9,49 @@ function EditarSala() {
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [salaName, setSalaName] = useState('');
     const [salaType, setSalaType] = useState('');
-    const [ativo, setAtivo] = useState(true);
+    const [setAtivo] = useState(true);
     const [loading, setLoading] = useState(false);
     const seatRows = 10;
     const seatColumns = 10;
     const [roomTypes, setRoomTypes] = useState([]);
 
-    // Função para alternar a seleção de cadeira
     const toggleSeatSelection = (row, col) => {
         const existingSeat = selectedSeats.find(s => s.linha === row && s.numero === col);
 
         if (existingSeat) {
-            // Se a cadeira já está na seleção, perguntamos se o usuário deseja excluir
             const confirmDelete = window.confirm('Deseja excluir esta cadeira?');
             if (confirmDelete) {
                 handleRemoveSeat(existingSeat);  // Remover cadeira
             }
         } else {
-            // Se não está na seleção, perguntamos se deseja adicionar
             const confirmAdd = window.confirm('Deseja adicionar esta cadeira?');
             if (confirmAdd) {
-                handleAddSeat(row, col);  // Adicionar cadeira
+                handleAddSeat(row, col);
             }
         }
     };
 
-    // Função para adicionar cadeira à seleção
     const handleAddSeat = async (row, col) => {
-        const seat = { linha: row, numero: col, id_cadeira: null };  // Inicialmente sem ID
+        const seat = { linha: row, numero: col, id_cadeira: null }; 
 
-        setLoading(true); // Define o estado de loading como verdadeiro
+        setLoading(true);
         try {
             const chairsData = [
                 {
-                    linha: row,   // Exemplo de valor: 'A'
-                    numero: col,  // Exemplo de valor: 1
+                    linha: row,
+                    numero: col,
                 }
             ];
 
-            // Chama o serviço para adicionar a cadeira
             const response = await SalaService.addChairsToRoom(id_sala, chairsData);
             console.log("Resposta do backend:", response);
 
             if (response.success) {
-                // Extrai as informações da cadeira da resposta
                 const newChair = response.results[0].newChair;
 
-                // Atribui o ID à cadeira
                 seat.id_cadeira = newChair.id_cadeira;
 
-                // Atualiza o estado de selectedSeats com a nova cadeira
-                setSelectedSeats(prevSeats => [...prevSeats, seat]); // Adiciona a cadeira à lista
+                setSelectedSeats(prevSeats => [...prevSeats, seat]);
 
                 alert("Cadeira adicionada com sucesso!");
             } else {
@@ -69,7 +61,7 @@ function EditarSala() {
             console.error("Erro ao adicionar cadeira:", error);
             alert("Erro ao adicionar cadeira.");
         } finally {
-            setLoading(false); // Define o estado de loading como falso
+            setLoading(false);
         }
     };
 
@@ -164,10 +156,7 @@ function EditarSala() {
         return seats;
     };
 
-    const handleSaveRoom = async () => {
-        // Função para salvar os dados da sala
-        // Implemente aqui a lógica para salvar os dados da sala e suas configurações
-    };
+    const handleSaveRoom = async () => {};
 
     return (
         <div className={styles.container}>

@@ -15,11 +15,11 @@ function CriarSessao() {
   const [erroCarregamentoFilmes, setErroCarregamentoFilmes] = useState("");
   const [erroCarregamentoSalas, setErroCarregamentoSalas] = useState("");
   const [setErroCarregamentoIngressos] = useState("");
-  const [setIdSessaoCriada] = useState(null);
+  const [idSessaoCriada, setIdSessaoCriada] = useState(null);
   const [dataSessao, setDataSessao] = useState("");
-  const [loading, setLoading] = useState(false); // Estado de carregamento
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // Hook do React Router para navegação
+  const navigate = useNavigate();
 
   // Carregar filmes
   useEffect(() => {
@@ -85,7 +85,7 @@ function CriarSessao() {
 
   // Função para criar a sessão e depois cadastrar os preços de ingresso
   const criarSessaoEIngressos = async () => {
-    setLoading(true); // Ativa o estado de carregamento
+    setLoading(true);
     try {
       const dataFormatada = new Date(dataSessao).toISOString();
 
@@ -105,7 +105,6 @@ function CriarSessao() {
 
         alert("Sessão e preços de ingressos criados com sucesso!");
 
-        // Redireciona para a página inicial após o sucesso
         navigate("/");
 
       }
@@ -113,7 +112,7 @@ function CriarSessao() {
       console.error("Erro ao criar a sessão ou os preços:", error);
       alert("Erro ao criar a sessão ou os preços dos ingressos.");
     } finally {
-      setLoading(false); // Desativa o estado de carregamento
+      setLoading(false);
     }
   };
 

@@ -18,6 +18,8 @@ import {useEffect} from "react";
 import TelaUsuario from './pages/TelaUsuario.jsx';
 import CriarGenero from './pages/Generos/CriarGenero.jsx';
 import ListarGeneros from './pages/Generos/ListarGenero.jsx';
+import ListarFilmes from './pages/FIlmes/ListarFilmes.jsx';
+import CriarFilme from './pages/FIlmes/CriarFilme.jsx';
 
 const App = () => {
     return (
@@ -53,6 +55,8 @@ const App = () => {
                         <Route path="/criar-sessao" element={<CriarSessao/>}/>
                         <Route path="/criar-genero" element={<CriarGenero/>}/>
                         <Route path="/listar-generos" element={<ListarGeneros/>}/>
+                        <Route path="/criar-filme" element={<CriarFilme/>}/>
+                        <Route path="/listar-filmes" element={<ListarFilmes/>}/>
                         <Route path="/criar-sala" element={<CriarSala />} />
                         <Route path="/listar-salas" element={<ListarSalas />} />
                         <Route path="/editar-sala/:id_sala" element={<EditarSala />} />
