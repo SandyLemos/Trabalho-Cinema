@@ -10,7 +10,7 @@ import { setAuthToken } from "../../utils/api.js";
 function BarraMenu() {
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
-    const [setError] = useState('');
+    const [error, setError] = useState('');
     const { isAuthenticated, role, loading: authLoading, error: authError } = useAuthCheck();
     const navigate = useNavigate();
 
