@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import FilmesService from "../../services/FilmesService.js";
 import GenerosService from "../../services/GenerosService.js";
 import styles from "../../styles/editar.filme.module.css";
+import axios from "axios";
 
 function EditarFilme() {
   const { id_filme } = useParams();
@@ -20,6 +21,7 @@ function EditarFilme() {
   const [generosMap, setGenerosMap] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Função para carregar dados do filme
@@ -67,54 +69,87 @@ function EditarFilme() {
     fetchGeneros();
   }, [id_filme]);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setSuccess(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
 
-  // Garantir que duracao, classificacao_etaria e nota_imdb sejam números válidos ou nulos
-  const updatedFilm = {
-    titulo,
-    sinopse,
-    data_lancamento: dataLancamento,
-    duracao: duracao ? parseInt(duracao, 10) : null, // Verifica se é válido, senão, atribui null
-    classificacao_etaria: classificacaoEtaria ? parseInt(classificacaoEtaria, 10) : null, // Mesmo tratamento para classificacao_etaria
-    poster_path: posterPath,
-    trailer_url: trailerUrl,
-    nota_imdb: notaImdb ? parseFloat(notaImdb) : null, // Verifica se é válido, senão, atribui null
-    generos: generosSelecionados,  // Presumo que você tenha a lista de gêneros corretamente configurada
+    // Garantir que duracao, classificacao_etaria e nota_imdb sejam números válidos ou nulos
+    const updatedFilm = {
+      titulo,
+      sinopse,
+      data_lancamento: dataLancamento,
+      duracao: duracao ? parseInt(duracao, 10) : null, // Verifica se é válido, senão, atribui null
+      classificacao_etaria: classificacaoEtaria ? parseInt(classificacaoEtaria, 10) : null, // Mesmo tratamento para classificacao_etaria
+      poster_path: posterPath,
+      trailer_url: trailerUrl,
+      nota_imdb: notaImdb ? parseFloat(notaImdb) : null, // Verifica se é válido, senão, atribui null
+      generos: generosSelecionados,  // Presumo que você tenha a lista de gêneros corretamente configurada
+    };
+
+    try {
+      const response = await FilmesService.updateFilm(id_filme, updatedFilm);
+      if (response.success) {
+        navigate("/listar-filmes");
+      } else {
+        alert("Erro ao atualizar filme.");
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar filme:", error);
+      alert("Erro ao atualizar filme.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  try {
-    const response = await FilmesService.updateFilm(id_filme, updatedFilm);
-    if (response.success) {
-      navigate("/listar-filmes");
-    } else {
-      alert("Erro ao atualizar filme.");
+
+  const handleGenreChange = (e) => {
+    const selectedGenreId = parseInt(e.target.value, 10);
+    if (selectedGenreId && !generosSelecionados.includes(selectedGenreId)) {
+      setGenerosSelecionados((prevGeneros) => [
+        ...prevGeneros,
+        selectedGenreId,
+      ]);
     }
-  } catch (error) {
-    console.error("Erro ao atualizar filme:", error);
-    alert("Erro ao atualizar filme.");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
-
-const handleGenreChange = (e) => {
-  const selectedGenreId = parseInt(e.target.value, 10);  // Garantir que o valor seja um número
-  if (selectedGenreId && !generosSelecionados.includes(selectedGenreId)) {
-    setGenerosSelecionados((prevGeneros) => [
-      ...prevGeneros,
-      selectedGenreId,
-    ]);
-  }
-};
   const handleRemoveGenre = (genreId) => {
     setGenerosSelecionados((prevGeneros) =>
       prevGeneros.filter((generoId) => generoId !== genreId)
     );
   };
+
+
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setLoading(true);
+    setError(null);
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const API_KEY = "c91bbce0bb167775e1db1ab3bc4bdd62";
+      const response = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+        formData
+      );
+
+      if (response.data?.data?.url) {
+        setPosterPath(response.data.data.url);
+      } else {
+        throw new Error("Resposta inesperada do ImgBB.");
+      }
+    } catch (error) {
+      setError("Erro ao enviar imagem. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return (
     <div className={styles.container}>
@@ -172,6 +207,15 @@ const handleGenreChange = (e) => {
           />
         </div>
         <div className={styles.formGroup}>
+          <label htmlFor="fileUpload">Envie o Pôster (Imagem)</label>
+          <input
+            type="file"
+            id="fileUpload"
+            onChange={handleImageUpload}
+            accept="image/*"
+          />
+        </div>
+        <div className={styles.formGroup}>
           <label htmlFor="posterPath">URL do Poster</label>
           <input
             type="text"
@@ -206,7 +250,7 @@ const handleGenreChange = (e) => {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="generos">Selecione os Gêneros</label>
-          <select id="generos" value="" onChange={handleGenreChange}>
+          <select id="generos" value={generosSelecionados} onChange={handleGenreChange}>
             <option value="">Selecione...</option>
             {generos.map((genre) => (
               <option key={genre.id_genero} value={genre.id_genero}>

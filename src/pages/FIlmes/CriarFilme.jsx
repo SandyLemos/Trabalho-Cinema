@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaSearch } from "react-icons/fa"; // Ícone de pesquisa
+import { RiGeminiFill } from "react-icons/ri"; // Ícone de pesquisa
 import FilmesService from "../../services/FilmesService.js";
 import GenerosService from "../../services/GenerosService.js";
 import styles from "../../styles/cadastrar.filmes.module.css";
+import axios from "axios";
 
 const CriarFilme = () => {
   const navigate = useNavigate();
@@ -141,6 +142,37 @@ const handleGenreChange = (event) => {
     );
   };
 
+    // Upload de imagem
+const handleImageUpload = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  setLoading(true);
+  setError(null);
+
+  // Configuração do FormData para envio ao ImgBB
+  const formData = new FormData();
+  formData.append("image", file);
+
+  try {
+    const API_KEY = "c91bbce0bb167775e1db1ab3bc4bdd62";
+    const response = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+      formData
+    );
+
+    if (response.data?.data?.url) {
+      setPosterPath(response.data.data.url); // URL retornada pelo ImgBB
+    } else {
+      throw new Error("Resposta inesperada do ImgBB.");
+    }
+  } catch (error) {
+    setError("Erro ao enviar imagem. Tente novamente.");
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <div className={styles["criar-filme-container"]}>
       <h2 className={styles["criar-filme-title"]}>Cadastrar Filme</h2>
@@ -156,10 +188,10 @@ const handleGenreChange = (event) => {
               required
             />
             {/* Ícone de Pesquisa */}
-            <FaSearch
+            <RiGeminiFill 
               onClick={buscarFilme}
               className={styles["search-icon"]}
-              title="Buscar filme"
+              title="Gerar filme"
             />
           </div>
         </div>
@@ -203,13 +235,21 @@ const handleGenreChange = (event) => {
           />
         </div>
         <div className={styles["criar-filme-field"]}>
+          <label htmlFor="fileUpload">Procurar</label>
+          <input
+            type="file"
+            onChange={handleImageUpload}
+            placeholder="Selecionar Imagem do Pôster"
+            accept="image/*"
+          />
+        </div>
+        <div className={styles["criar-filme-field"]}>
           <input
             type="url"
             id="poster_path"
             value={posterPath}
-            onChange={handleChange(setPosterPath)}
             placeholder="URL do Pôster"
-            required
+            readOnly
           />
         </div>
         <div className={styles["criar-filme-field"]}>

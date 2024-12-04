@@ -26,6 +26,7 @@
     width: 100%;
     max-width: 50rem;
     margin: auto;
+    align-items: center;
 }
 
 .criar-filme-field {
@@ -33,6 +34,7 @@
     padding-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
+    
 }
 
 .criar-filme-field label {
@@ -122,7 +124,6 @@
     border-color: #7d2ae8;
     box-shadow: 0 0 1rem rgba(125, 42, 232, 0.4);
 }
-
 .criar-filme-submitButton {
     
     width: 100%;

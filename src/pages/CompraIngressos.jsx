@@ -5,19 +5,19 @@ import IngressoService from '../services/IngressoService';
 import ReservaService from '../repositories/IngressoRepository'; // Certifique-se de que tem um serviço de reserva
 import { useNavigate } from 'react-router-dom'
 const CompraIngressos = () => {
-  const location = useLocation(); // Usando o hook useLocation para acessar os dados passados pela navegação
-  const { selectedSeats, id_sessao } = location.state || { selectedSeats: [], id_sessao: null }; // Pegando os dados da navegação
+  const location = useLocation();
+  const { selectedSeats, id_sessao } = location.state || { selectedSeats: [], id_sessao: null }; 
   const [ticketPrices, setTicketPrices] = useState([]);
   const [ticketTypes, setTicketTypes] = useState([]);
   const [filteredPrices, setFilteredPrices] = useState([]);
   const [inteiraCount, setInteiraCount] = useState(0);
   const [meiaCount, setMeiaCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [reservationLoading, setReservationLoading] = useState(false); // Estado para controlar o loading da reserva
-  const [error, setError] = useState(null); // Estado para erro de reserva
-  const [selectedTicketType, setSelectedTicketType] = useState(null); // Armazena o tipo de ingresso selecionado
+  const [reservationLoading, setReservationLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [selectedTicketType, setSelectedTicketType] = useState(null);
   const navigate = useNavigate();
-  const totalSelectedSeats = selectedSeats.length;  // Quantidade total de assentos selecionados
+  const totalSelectedSeats = selectedSeats.length;
 
   // Função para pegar todos os preços de ingressos
   const getTicketPrice = async () => {
