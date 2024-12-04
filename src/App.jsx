@@ -22,6 +22,7 @@ import ListarFilmes from './pages/FIlmes/ListarFilmes.jsx';
 import CriarFilme from './pages/FIlmes/CriarFilme.jsx';
 import EditarFilme from './pages/FIlmes/EditarFilme.jsx';
 import ListarSessoes from './pages/Sessao/ListarSessoes.jsx';
+import AdminRoute from "./pages/components/DaquiNinguemPassa.jsx";
 
 const App = () => {
     return (
@@ -53,17 +54,17 @@ const App = () => {
                         <Route path="/compra-ingresso" element={<CompraIngressos />} />
                         <Route path="/programacao" element={<Programacao />} />
                         <Route path="/search" element={<Search />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/criar-sessao" element={<CriarSessao/>}/>
-                        <Route path="/criar-genero" element={<CriarGenero/>}/>
-                        <Route path="/listar-generos" element={<ListarGeneros/>}/>
-                        <Route path="/criar-filme" element={<CriarFilme/>}/>
-                        <Route path="/listar-filmes" element={<ListarFilmes/>}/>
-                        <Route path="/listar-sessoes" element={<ListarSessoes/>}/>
-                        <Route path="/editar-filme/:id_filme" element={<EditarFilme />} />
-                        <Route path="/criar-sala" element={<CriarSala />} />
-                        <Route path="/listar-salas" element={<ListarSalas />} />
-                        <Route path="/editar-sala/:id_sala" element={<EditarSala />} />
+                        <Route path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
+                        <Route path="/criar-sessao" element={<AdminRoute><CriarSessao/></AdminRoute>}/>
+                        <Route path="/criar-genero" element={<AdminRoute><CriarGenero/></AdminRoute>}/>
+                        <Route path="/listar-generos" element={<AdminRoute><ListarGeneros/></AdminRoute>}/>
+                        <Route path="/criar-filme" element={<AdminRoute><CriarFilme/></AdminRoute>}/>
+                        <Route path="/listar-filmes" element={<AdminRoute><ListarFilmes/></AdminRoute>}/>
+                        <Route path="/listar-sessoes" element={<AdminRoute><ListarSessoes/></AdminRoute>}/>
+                        <Route path="/editar-filme/:id_filme" element={<AdminRoute><EditarFilme /></AdminRoute>} />
+                        <Route path="/criar-sala" element={<AdminRoute><CriarSala /></AdminRoute>} />
+                        <Route path="/listar-salas" element={<AdminRoute><ListarSalas /></AdminRoute>} />
+                        <Route path="/editar-sala/:id_sala" element={<AdminRoute><EditarSala /></AdminRoute>} />
                         <Route path="/filme/:id/:slug" element={<TelaFilme />} />
                         <Route path="/perfil" element={<TelaUsuario />} />
                     </Route>

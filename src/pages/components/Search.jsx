@@ -1,34 +1,30 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import filmes from "../../services/FilmesService.js";
-
+import styles from "../../styles/tela.principal.module.css";
 const Search = () => {
     const location = useLocation();
     const [films, setFilms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // Pegando o parâmetro 'title' da URL
     const query = new URLSearchParams(location.search).get('title');
 
     useEffect(() => {
         const fetchFilms = async () => {
-            // Se filmes foram passados através da navegação (state)
-            if (location.state.films && location.state) {
+            if (location.state && location.state.films) {
                 setFilms(location.state.films);
             }
-            // Se houve erro na navegação anterior (state.error)
-            else if (location.state.error && location.state) {
+            else if (location.state && location.state.error) {
                 setError(location.state.error);
             }
-            // Caso contrário, realiza a busca com base no título na URL
             else if (query) {
                 setLoading(true);
-                setError(''); // Limpa erro anterior
+                setError('');
                 try {
                     const response = await filmes.getFilmsByTitle(query);
-                    if (response.films.length > 0 && Array.isArray(response.films) && response.success && response) {
-                        setFilms(response.films); // Atualiza a lista de filmes
+                    if (response.films.length > 0 && Array.isArray(response.films) && response.success) {
+                        setFilms(response.films);
                     } else {
                         setError('Nenhum filme encontrado.');
                     }
@@ -44,21 +40,25 @@ const Search = () => {
     }, [location, query]);
 
     return (
-        <div>
+        <div className={styles.area_filmes}>
             <h1>Resultados da Pesquisa</h1>
             {loading && <p>Carregando...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {films.length > 0 ? (
-                <ul>
-                    {films.map((film) => (
-                        <li key={film.id_filme}>
-                            <h2>{film.titulo}</h2>
-                            <img src={film.poster_path} alt={film.titulo} />
-                            <p>{film.sinopse}</p>
-                            <p>Classificação: {film.classificacao_etaria}</p>
-                        </li>
-                    ))}
-                </ul>
+                <div className={styles.filmes_principais}>
+                    <div className={styles.carrossel_conteudo}>
+                        {films.map((film) => (
+                            <div key={film.id_filme} className={styles.filme_cartaz}>
+                                <div className={styles.parte_imagem}>
+                                    <img src={film.poster_path} alt={film.titulo} />
+                                </div>
+                                <div className={styles.parte_info}>
+                                    <h4>{film.titulo}</h4>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             ) : (
                 !loading && !error && <p>Nenhum filme encontrado.</p>
             )}
